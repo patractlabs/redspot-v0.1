@@ -1,6 +1,5 @@
 {
   "name": "redspot",
-  "private": true,
   "workspaces": [
     "packages/*"
   ],
