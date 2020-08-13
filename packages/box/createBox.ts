@@ -1,10 +1,10 @@
 import chalk from 'chalk';
-import fs from 'fs-extra';
-import path from 'path';
-import spawn from 'cross-spawn';
-import os from 'os';
-import semver from 'semver';
 import { execSync } from 'child_process';
+import spawn from 'cross-spawn';
+import fs from 'fs-extra';
+import os from 'os';
+import path from 'path';
+import semver from 'semver';
 
 const packageToInstall = 'redspot';
 const templateToInstall = '@redspot/redspot-template';
@@ -197,4 +197,4 @@ function executeNodeScript({ cwd, args }: { cwd: string; args: string[] }, data:
   });
 }
 
-export default createBox;
+export { createBox, executeNodeScript };
