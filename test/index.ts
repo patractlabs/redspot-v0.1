@@ -1,3 +1,3 @@
 import { createBox } from '@redspot/box'
 
-createBox('dsdasdasd', true)
+createBox('test-project', true)

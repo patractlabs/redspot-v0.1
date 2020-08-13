@@ -4,6 +4,7 @@ import path from 'path';
 import spawn from 'cross-spawn';
 import os from 'os';
 import semver from 'semver';
+import { execSync } from 'child_process';
 
 const packageToInstall = 'redspot';
 const templateToInstall = '@redspot/redspot-template';
@@ -34,23 +35,38 @@ function createBox(name: string, verbose: boolean): void {
 
   const originalDirectory = process.cwd();
 
-  run(root, appName, originalDirectory, verbose);
+  const useYarn = shouldUseYarn();
+
+  run(root, appName, originalDirectory, useYarn, verbose);
 }
 
-function run(root: string, appName: string, originalDirectory: string, verbose: boolean) {
+function run(root: string, appName: string, originalDirectory: string, useYarn: boolean, verbose: boolean) {
   const allDependencies = [packageToInstall];
 
   console.log('Installing packages. This might take a couple of minutes.');
 
-  install(root, allDependencies, verbose).then(() => {
-    checkNodeVersion(packageToInstall)
+  install(root, allDependencies, useYarn, verbose).then(() => {
+    checkNodeVersion(packageToInstall);
   });
 }
 
-function install(root: string, dependencies: string[], verbose: boolean) {
+function install(root: string, dependencies: string[], useYarn: boolean, verbose: boolean) {
   return new Promise((resolve, reject) => {
-    const command = 'npm';
-    const args = ['install', '--save', '--save-exact', '--loglevel', 'error'].concat(dependencies);
+    let command: string;
+    let args: string[];
+
+    if (useYarn) {
+      command = 'yarnpkg';
+      args = ['add', '--exact'];
+
+      [].push.apply(args, dependencies as any);
+
+      args.push('--cwd');
+      args.push(root);
+    } else {
+      command = 'npm';
+      args = ['install', '--save', '--save-exact', '--loglevel', 'error'].concat(dependencies);
+    }
 
     if (verbose) {
       args.push('--verbose');
@@ -70,6 +86,15 @@ function install(root: string, dependencies: string[], verbose: boolean) {
   });
 }
 
+function shouldUseYarn() {
+  try {
+    execSync('yarnpkg --version', { stdio: 'ignore' });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 function checkDirName(dirname: string): void {}
 
 function checkNodeVersion(packageName: string) {
@@ -87,9 +112,7 @@ function checkNodeVersion(packageName: string) {
   if (!semver.satisfies(process.version, packageJson.engines.node)) {
     console.error(
       chalk.red(
-        'You are running Node %s.\n' +
-          'Redspot requires Node %s or higher. \n' +
-          'Please update your version of Node.',
+        'You are running Node %s.\n' + 'Redspot requires Node %s or higher. \n' + 'Please update your version of Node.',
       ),
       process.version,
       packageJson.engines.node,
