@@ -45,21 +45,52 @@ function run(root: string, appName: string, originalDirectory: string, useYarn: 
 
   console.log('Installing packages. This might take a couple of minutes.');
 
-  install(root, allDependencies, useYarn, verbose).then(async () => {
-    checkNodeVersion(packageToInstall);
+  install(root, allDependencies, useYarn, verbose)
+    .then(async () => {
+      checkNodeVersion(packageToInstall);
 
-    await executeNodeScript(
-      {
-        cwd: process.cwd(),
-        args: [],
-      },
-      [root, appName, verbose, originalDirectory, templateToInstall],
-      `
+      await executeNodeScript(
+        {
+          cwd: process.cwd(),
+          args: [],
+        },
+        [root, appName, verbose, originalDirectory, templateToInstall],
+        `
     var init = require('${packageToInstall}/scripts/init.js');
     init.apply(null, JSON.parse(process.argv[1]));
   `,
-    );
-  });
+      );
+    })
+    .catch((reason) => {
+      console.log();
+      console.log('Aborting installation.');
+      if (reason.command) {
+        console.log(`  ${chalk.cyan(reason.command)} has failed.`);
+      } else {
+        console.log(chalk.red('Unexpected error. Please report it as a bug:'));
+        console.log(reason);
+      }
+      console.log();
+
+      const knownGeneratedFiles = ['package.json', 'yarn.lock', 'package-lock.json', 'node_modules'];
+      const currentFiles = fs.readdirSync(path.join(root));
+      currentFiles.forEach((file) => {
+        knownGeneratedFiles.forEach((fileToMatch) => {
+          if (file === fileToMatch) {
+            console.log(`Deleting generated file... ${chalk.cyan(file)}`);
+            fs.removeSync(path.join(root, file));
+          }
+        });
+      });
+      const remainingFiles = fs.readdirSync(path.join(root));
+      if (!remainingFiles.length) {
+        console.log(`Deleting ${chalk.cyan(`${appName}/`)} from ${chalk.cyan(path.resolve(root, '..'))}`);
+        process.chdir(path.resolve(root, '..'));
+        fs.removeSync(path.join(root));
+      }
+      console.log('Done.');
+      process.exit(1);
+    });
 }
 
 function install(root: string, dependencies: string[], useYarn: boolean, verbose: boolean) {
