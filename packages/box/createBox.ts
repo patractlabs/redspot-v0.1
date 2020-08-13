@@ -45,8 +45,20 @@ function run(root: string, appName: string, originalDirectory: string, useYarn: 
 
   console.log('Installing packages. This might take a couple of minutes.');
 
-  install(root, allDependencies, useYarn, verbose).then(() => {
+  install(root, allDependencies, useYarn, verbose).then(async () => {
     checkNodeVersion(packageToInstall);
+
+    await executeNodeScript(
+      {
+        cwd: process.cwd(),
+        args: [],
+      },
+      [root, appName, verbose, originalDirectory, templateToInstall],
+      `
+    var init = require('${packageToInstall}/scripts/init.js');
+    init.apply(null, JSON.parse(process.argv[1]));
+  `,
+    );
   });
 }
 
@@ -133,6 +145,25 @@ function isSafeToCreateBox(root: string, name: string): boolean {
   }
 
   return true;
+}
+
+function executeNodeScript({ cwd, args }: { cwd: string; args: string[] }, data: any[], source: string) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(process.execPath, [...args, '-e', source, '--', JSON.stringify(data)], {
+      cwd,
+      stdio: 'inherit',
+    });
+
+    child.on('close', (code) => {
+      if (code !== 0) {
+        reject({
+          command: `node ${args.join(' ')}`,
+        });
+        return;
+      }
+      resolve();
+    });
+  });
 }
 
 export default createBox;
