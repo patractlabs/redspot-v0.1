@@ -1,0 +1,26 @@
+{
+  "name": "redspot",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "opvqo <wxoxc@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^3.9.7",
+    "yargs": "^15.4.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "jest": "^26.2.2",
+    "pretty-quick": "^2.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
+}
