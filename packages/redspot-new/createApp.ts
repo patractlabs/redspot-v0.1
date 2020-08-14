@@ -53,7 +53,7 @@ function createApp(name: string, verbose: boolean): void {
   }
 
   console.log();
-  console.log(`Creating a new Project in ${chalk.green(root)}.`);
+  console.log(`✨ Creating a new Project in ${chalk.green(root)}.`);
 
   const packageJson = {
     name: appName,
@@ -74,7 +74,7 @@ function createApp(name: string, verbose: boolean): void {
 function run(root: string, appName: string, originalDirectory: string, useYarn: boolean, verbose: boolean) {
   const allDependencies = [packageToInstall, templateToInstall];
 
-  console.log('Installing packages. This might take a couple of minutes.');
+  console.log('Installing packages. This might take a while.');
 
   install(root, allDependencies, useYarn, verbose)
     .then(async () => {
