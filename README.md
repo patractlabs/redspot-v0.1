@@ -7,3 +7,9 @@ In Redspot v0.1, we will finish：
 2. Provide some simple commands to do the actions, such as “compile”, “test” and “deploy”.
 3. Connect with different RPCs of substrate nodes depending on a config, then do test, deployment, etc.
 4. Integrate polkadot.js for tests and connect with nodes.
+
+## Quick Start
+
+```bash
+  npx redspot-new flipper
+```
