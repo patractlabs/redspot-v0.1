@@ -5,12 +5,39 @@ import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
 import semver from 'semver';
+import yargs from 'yargs';
 
 const packageToInstall = 'redspot';
 const templateToInstall = '@redspot/redspot-template';
 
 function init() {
+  const currentNodeVersion = process.versions.node;
 
+  if (+currentNodeVersion.split('.')[0] < 10) {
+    console.error(
+      `You are running Node ${currentNodeVersion}. \nRedspot requires Node 10 or higher. \nPlease update your version of Node.`,
+    );
+    process.exit(1);
+  }
+
+  const argv = yargs
+    .usage(`Usage: $0 ${chalk.green('<project-name>')} [options]`)
+    .option('verbose', {
+      alias: 'v',
+      type: 'boolean',
+      default: false,
+      description: 'Run with verbose logging',
+    })
+    .demandCommand(
+      1,
+      `Please specify the project name, for example: \n  ${chalk.cyan('redspot-new')} ${chalk.green('flipper')}`,
+    )
+    .example('$0 flipper', 'initializes a new Substrate contract project in the specified directory')
+    .epilog('power by patract labs').argv;
+
+  const projectName = argv._[0];
+
+  createApp(projectName, argv.verbose);
 }
 
 function createApp(name: string, verbose: boolean): void {
