@@ -1,0 +1,8 @@
+{
+  "package": {
+    "dependencies": {},
+    "scripts": {
+      "build": "redspot build"
+    }
+  }
+}

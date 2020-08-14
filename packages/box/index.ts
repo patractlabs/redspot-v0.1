@@ -1,1 +1,1 @@
-export { default as createBox } from './createBox';
+export * from './createBox';

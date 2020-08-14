@@ -23,7 +23,6 @@ function createBox(name: string, verbose: boolean): void {
 
   console.log();
   console.log(`Creating a new Project in ${chalk.green(root)}.`);
-  console.log(`================`);
 
   const packageJson = {
     name: appName,
@@ -41,7 +40,7 @@ function createBox(name: string, verbose: boolean): void {
 }
 
 function run(root: string, appName: string, originalDirectory: string, useYarn: boolean, verbose: boolean) {
-  const allDependencies = [packageToInstall];
+  const allDependencies = [packageToInstall, templateToInstall];
 
   console.log('Installing packages. This might take a couple of minutes.');
 
@@ -49,17 +48,17 @@ function run(root: string, appName: string, originalDirectory: string, useYarn: 
     .then(async () => {
       checkNodeVersion(packageToInstall);
 
-      await executeNodeScript(
-        {
-          cwd: process.cwd(),
-          args: [],
-        },
-        [root, appName, verbose, originalDirectory, templateToInstall],
-        `
-    var init = require('${packageToInstall}/scripts/init.js');
-    init.apply(null, JSON.parse(process.argv[1]));
-  `,
-      );
+  //     await executeNodeScript(
+  //       {
+  //         cwd: process.cwd(),
+  //         args: [],
+  //       },
+  //       [root, appName, verbose, originalDirectory, templateToInstall],
+  //       `
+  //   var init = require('${packageToInstall}/scripts/init.js');
+  //   init.apply(null, JSON.parse(process.argv[1]));
+  // `,
+  //     );
     })
     .catch((reason) => {
       console.log();
