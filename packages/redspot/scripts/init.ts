@@ -41,26 +41,6 @@ function tryGitInit() {
     return false;
   }
 }
-
-function tryGitCommit(appPath: string) {
-  try {
-    execSync('git add -A', { stdio: 'ignore' });
-    execSync('git commit -m "Initialize project using Create React App"', {
-      stdio: 'ignore',
-    });
-    return true;
-  } catch (e) {
-    console.warn('Git commit not created', e);
-    console.warn('Removing .git directory...');
-    try {
-      fs.removeSync(path.join(appPath, '.git'));
-    } catch (removeErr) {
-      // Ignore.
-    }
-    return false;
-  }
-}
-
 function init(appPath: string, appName: string, verbose: boolean, originalDirectory: string, templateName: string) {
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
@@ -173,11 +153,6 @@ function init(appPath: string, appName: string, verbose: boolean, originalDirect
     console.error(`\`${command} ${args.join(' ')}\` failed`);
   }
 
-  // Create git commit if git repo was initialized
-  if (initializedGit && tryGitCommit(appPath)) {
-    console.log();
-    console.log('Created git commit.');
-  }
 
   // Change displayed command to yarn instead of yarnpkg
   const displayedCommand = useYarn ? 'yarn' : 'npm';
