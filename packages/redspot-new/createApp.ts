@@ -53,7 +53,7 @@ function createApp(name: string, verbose: boolean): void {
   }
 
   console.log();
-  console.log(`✨ Creating a new Project in ${chalk.green(root)}.`);
+  console.log(`✨  Creating a new Project in ${chalk.green(root)}.`);
 
   const packageJson = {
     name: appName,

@@ -173,8 +173,8 @@ function init(appPath: string, appName: string, verbose: boolean, originalDirect
   const displayedCommand = useYarn ? 'yarn' : 'npm';
 
   console.log();
-  console.log(`🎉 Success! Created ${chalk.yellow(appName)} at ${chalk.green(appPath)}`);
-  console.log('👉 Inside that directory, you can run several commands to help you develop the contract:');
+  console.log(`🎉  Success! Created ${chalk.yellow(appName)} at ${chalk.green(appPath)}`);
+  console.log('👉  Inside that directory, you can run several commands to help you develop the contract:');
   console.log();
   console.log(chalk.cyan(`  ${displayedCommand} build`));
   console.log('    Compile the contract.');
