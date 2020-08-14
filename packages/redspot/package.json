@@ -9,6 +9,9 @@
     "cross-spawn": "^7.0.3",
     "fs-extra": "^9.0.1"
   },
+  "files": [
+    "scripts"
+  ],
   "devDependencies": {
     "cross-spawn": "^7.0.3"
   }
