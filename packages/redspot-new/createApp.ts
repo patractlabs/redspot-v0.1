@@ -64,6 +64,7 @@ function createApp(name: string, verbose: boolean): void {
   fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify(packageJson, null, 2) + os.EOL);
 
   const originalDirectory = process.cwd();
+  process.chdir(root);
 
   const useYarn = shouldUseYarn();
 
@@ -86,7 +87,7 @@ function run(root: string, appName: string, originalDirectory: string, useYarn: 
         },
         [root, appName, verbose, originalDirectory, templateToInstall],
         `
-    var init = require('${packageToInstall}/scripts/init.js');
+    var { init } = require('${packageToInstall}/scripts/init.js');
     init.apply(null, JSON.parse(process.argv[1]));
   `,
       );
