@@ -116,6 +116,16 @@ function init(appPath: string, appName: string, verbose: boolean, originalDirect
     return;
   }
 
+  const gitignoreExists = fs.existsSync(path.join(appPath, '.gitignore'));
+  if (gitignoreExists) {
+    // Append if there's already a `.gitignore` file there
+    const data = fs.readFileSync(path.join(appPath, 'gitignore'));
+    fs.appendFileSync(path.join(appPath, '.gitignore'), data);
+    fs.unlinkSync(path.join(appPath, 'gitignore'));
+  } else {
+    fs.moveSync(path.join(appPath, 'gitignore'), path.join(appPath, '.gitignore'), [] as any);
+  }
+
   // Initialize git repo
   let initializedGit = false;
 
