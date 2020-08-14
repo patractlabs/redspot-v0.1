@@ -11,8 +11,7 @@
   },
   "files": [
     "index.js",
-    "createReactApp.js",
-    "yarn.lock.cached"
+    "createApp.js"
   ],
   "bin": {
     "redspot-new": "./index.js"
