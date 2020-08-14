@@ -8,8 +8,25 @@ In Redspot v0.1, we will finish：
 3. Connect with different RPCs of substrate nodes depending on a config, then do test, deployment, etc.
 4. Integrate polkadot.js for tests and connect with nodes.
 
-## Quick Start
+
+## Get Started Immediately
 
 ```bash
   npx redspot-new flipper
 ```
+
+(npx is a package runner tool that comes with npm 5.2+ and higher, it ensures that you always install the latest version)
+
+Redspot will create a directory called my-app inside the current folder.
+
+Once the installation is done, you can open your project folder:
+
+```bash
+cd my-app
+```
+
+Inside the newly created project, you can run some built-in commands:
+
+### `npm run build` or `yarn build`
+
+Compile your contract into wasm
