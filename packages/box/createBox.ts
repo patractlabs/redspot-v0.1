@@ -48,17 +48,17 @@ function run(root: string, appName: string, originalDirectory: string, useYarn: 
     .then(async () => {
       checkNodeVersion(packageToInstall);
 
-  //     await executeNodeScript(
-  //       {
-  //         cwd: process.cwd(),
-  //         args: [],
-  //       },
-  //       [root, appName, verbose, originalDirectory, templateToInstall],
-  //       `
-  //   var init = require('${packageToInstall}/scripts/init.js');
-  //   init.apply(null, JSON.parse(process.argv[1]));
-  // `,
-  //     );
+      await executeNodeScript(
+        {
+          cwd: process.cwd(),
+          args: [],
+        },
+        [root, appName, verbose, originalDirectory, templateToInstall],
+        `
+    var init = require('${packageToInstall}/scripts/init.js');
+    init.apply(null, JSON.parse(process.argv[1]));
+  `,
+      );
     })
     .catch((reason) => {
       console.log();
