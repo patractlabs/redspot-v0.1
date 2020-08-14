@@ -9,7 +9,11 @@ import semver from 'semver';
 const packageToInstall = 'redspot';
 const templateToInstall = '@redspot/redspot-template';
 
-function createBox(name: string, verbose: boolean): void {
+function init() {
+
+}
+
+function createApp(name: string, verbose: boolean): void {
   const root = path.resolve(name);
   const appName = path.basename(root);
 
@@ -17,7 +21,7 @@ function createBox(name: string, verbose: boolean): void {
 
   fs.ensureDirSync(name);
 
-  if (!isSafeToCreateBox(root, name)) {
+  if (!isSafeToCreateApp(root, name)) {
     process.exit(1);
   }
 
@@ -163,7 +167,7 @@ function checkNodeVersion(packageName: string) {
   }
 }
 
-function isSafeToCreateBox(root: string, name: string): boolean {
+function isSafeToCreateApp(root: string, name: string): boolean {
   const files = fs.readdirSync(root);
 
   if (files.length > 0) {
@@ -196,4 +200,4 @@ function executeNodeScript({ cwd, args }: { cwd: string; args: string[] }, data:
   });
 }
 
-export { createBox, executeNodeScript };
+export { init, createApp, executeNodeScript };
