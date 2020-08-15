@@ -27,6 +27,6 @@ cd my-app
 
 Inside the newly created project, you can run some built-in commands:
 
-### `npm run build` or `yarn build`
+### `npm run compile` or `yarn compile`
 
 Compile your contract into wasm
