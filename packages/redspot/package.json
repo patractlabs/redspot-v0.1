@@ -13,7 +13,7 @@
     "scripts"
   ],
   "bin": {
-    "redspot": ".bin/redspot.js"
+    "redspot": "./bin/redspot.js"
   },
   "devDependencies": {
     "cross-spawn": "^7.0.3"
