@@ -1,0 +1,8 @@
+[workspace]
+exclude = [
+  ".ink",
+]
+members = [
+  ".ink/abi_gen",
+  "contracts/flipper",
+]
