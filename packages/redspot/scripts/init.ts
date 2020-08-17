@@ -106,11 +106,7 @@ function init(appPath: string, appName: string, verbose: boolean, originalDirect
     fs.moveSync(path.join(appPath, 'gitignore'), path.join(appPath, '.gitignore'), [] as any);
   }
 
-  // Initialize git repo
-  let initializedGit = false;
-
   if (tryGitInit()) {
-    initializedGit = true;
     console.log();
     console.log('Initialized a git repository.');
   }
