@@ -2,7 +2,8 @@
   "package": {
     "dependencies": {},
     "scripts": {
-      "build": "redspot build"
+      "build": "redspot build",
+      "deploy": "redspot deploy"
     }
   }
 }

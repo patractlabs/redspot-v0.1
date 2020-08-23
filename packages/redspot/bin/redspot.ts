@@ -6,7 +6,7 @@ process.on('unhandledRejection', (err) => {
   throw err;
 });
 
-const scripts = ['compile'];
+const scripts = ['compile', 'deploy'];
 const args = process.argv.slice(2);
 const scriptIndex = args.findIndex((x) => scripts.includes(x));
 const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
