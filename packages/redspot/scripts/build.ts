@@ -41,13 +41,13 @@ async function run() {
     console.log(`👉  Compile contract: ${chalk.yellow(contract.name)}`);
     try {
       await compileContracts(contract);
-      await generateMetadata(contract);
     } catch (reason) {
       if (reason.command) {
         console.log(`  ${chalk.cyan(reason.command)} has failed.`);
       } else {
         chalk.red('Unexpected error.');
       }
+      process.exit(1)
     }
   }
 }
