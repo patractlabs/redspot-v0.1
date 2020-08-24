@@ -149,7 +149,6 @@ function init(appPath: string, appName: string, verbose: boolean, originalDirect
     console.error(`\`${command} ${args.join(' ')}\` failed`);
   }
 
-
   // Change displayed command to yarn instead of yarnpkg
   const displayedCommand = useYarn ? 'yarn' : 'npm';
 

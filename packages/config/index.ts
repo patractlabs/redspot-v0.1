@@ -1,55 +1,39 @@
-import Contract from '@redspot/contract';
 import chalk from 'chalk';
-import { execSync } from 'child_process';
+import findUp from 'find-up';
+import path from 'path';
 
-class Resolver {
-  metadata: any;
-  contracts: any[];
+class RedspotConfig {
+  static expectFileNames = ['redspot-config.js', 'redspotConfig.js'];
+
+  config: any;
 
   constructor() {
-    this.metadata = this.getCargoMetadata();
-    this.contracts = this.getContracts();
+    this.load();
   }
 
-  require(contractName: string) {
-    const contractMetadata = this.contracts.find(({ name }: any) => name === contractName);
-    if (!contractMetadata) {
-      throw new Error(`The specified contract name ${chalk.cyan(contractName)} could not be found`);
-    }
-
-    const contract = new Contract(contractMetadata);
-
-    return contract;
+  get networks() {
+    return this.config.networks;
   }
 
-  getCargoMetadata() {
-    const execCommand = 'cargo metadata --no-deps --format-version 1';
-    try {
-      const output = execSync(execCommand, { maxBuffer: 1024 * 2048 }).toString();
-      return JSON.parse(output);
-    } catch (error) {
-      console.log(chalk.red(`\`${execCommand}\` has failed`));
-      process.exit(1);
-    }
+  load() {
+    const configPath = this.detectConfig();
+
+    delete require.cache[path.resolve(configPath)];
+
+    const config = require(configPath);
+
+    this.config = config;
   }
 
-  // @TODO hard code
-  getContracts(contractName?: string): any[] {
-    const contracts = this.metadata.packages
-      .filter(({ id, dependencies }: { id: string; dependencies: any }) => {
-        return (
-          (this.metadata.workspace_members || []).includes(id) &&
-          !!dependencies.find(({ name }: any) => name === 'ink_core')
-        );
-      })
-      .filter(({ name }: any) => !contractName || name === contractName);
+  detectConfig(): string {
+    for (const filename of RedspotConfig.expectFileNames) {
+      const file = findUp.sync(filename);
 
-    if (!contracts.length) {
-      console.log(chalk.red(`No contract lib could be found`));
-      process.exit(1);
+      if (file) return file;
     }
-    return contracts;
+
+    throw new Error(chalk.red('ERROR: Could not find suitable configuration file.'));
   }
 }
 
-export { Resolver };
+export { RedspotConfig };

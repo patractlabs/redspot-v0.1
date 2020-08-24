@@ -1,9 +1,9 @@
-import yargs from 'yargs';
+import { Resolver } from '@redspot/resolver';
 import chalk from 'chalk';
 import spawn from 'cross-spawn';
-import { checkContractCli } from '../utils/checkRustEnv';
-import { Resolver } from '@redspot/resolver';
 import path from 'path';
+import yargs from 'yargs';
+import { checkContractCli } from '../utils/checkRustEnv';
 
 process.on('unhandledRejection', (err) => {
   throw err;
@@ -47,7 +47,7 @@ async function run() {
       } else {
         chalk.red('Unexpected error.');
       }
-      process.exit(1)
+      process.exit(1);
     }
   }
 }

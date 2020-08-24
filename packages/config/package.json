@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@redspot/contract": "0.1.21",
-    "chalk": "^4.1.0"
+    "chalk": "^4.1.0",
+    "find-up": "^5.0.0"
   },
   "files": [
     "index.js"

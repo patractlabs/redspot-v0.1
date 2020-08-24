@@ -1,9 +1,7 @@
-import { loadConfig } from '../utils/config';
+import { RedspotConfig } from '@redspot/config';
 import yargs from 'yargs';
 import chalk from 'chalk';
 import spawn from 'cross-spawn';
-import { checkContractCli } from '../utils/checkRustEnv';
-import { getContracts } from '../utils/cargoMetadata';
 import path from 'path';
 
 const argv = yargs
@@ -22,6 +20,4 @@ const argv = yargs
 
 run();
 
-async function run() {
-
-}
+async function run() {}
