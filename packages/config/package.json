@@ -1,0 +1,13 @@
+{
+  "name": "@redspot/config",
+  "version": "0.1.21",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@redspot/contract": "0.1.21",
+    "chalk": "^4.1.0"
+  },
+  "files": [
+    "index.js"
+  ]
+}

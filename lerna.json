@@ -1,7 +1,10 @@
 {
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
+  "command": {
+    "version": {
+      "exact": true
+    }
+  },
   "npmClient": "yarn",
   "version": "0.1.21"
 }
