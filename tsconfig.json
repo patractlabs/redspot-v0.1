@@ -43,8 +43,10 @@
     "baseUrl": "./packages",
     "paths": {
       "redspot": ["redspot/*"],
+      "redspot-new": ["redspot-new/*"],
       "@redspot/redspot-template": ["redspot-template/*"],
-      "@redspot/box": ["box/*"]
+      "@redspot/contract": ["contract/*"],
+      "@redspot/resolver": ["resolver/*"]
     },
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */

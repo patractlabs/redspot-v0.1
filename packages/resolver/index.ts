@@ -1,5 +1,6 @@
-import { execSync } from 'child_process';
+import Contract from '@redspot/contract';
 import chalk from 'chalk';
+import { execSync } from 'child_process';
 
 class Resolver {
   metadata: any;
@@ -11,11 +12,14 @@ class Resolver {
   }
 
   require(contractName: string) {
-    const contractInfo = this.contracts.find(({ name }: any) => name === contractName);
-    if (!contractInfo) {
+    const contractMetadata = this.contracts.find(({ name }: any) => name === contractName);
+    if (!contractMetadata) {
       throw new Error('The specified contract name could not be found');
     }
-    return contractInfo;
+
+    const contract = new Contract(contractMetadata);
+
+    return contract;
   }
 
   getCargoMetadata() {
