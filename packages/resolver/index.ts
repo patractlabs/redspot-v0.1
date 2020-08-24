@@ -34,13 +34,15 @@ class Resolver {
   }
 
   // @TODO hard code
-  getContracts(): any[] {
-    const contracts = this.metadata.packages.filter(({ id, dependencies }: { id: string; dependencies: any }) => {
-      return (
-        (this.metadata.workspace_members || []).includes(id) &&
-        !!dependencies.find(({ name }: any) => name === 'ink_core')
-      );
-    });
+  getContracts(contractName?: string): any[] {
+    const contracts = this.metadata.packages
+      .filter(({ id, dependencies }: { id: string; dependencies: any }) => {
+        return (
+          (this.metadata.workspace_members || []).includes(id) &&
+          !!dependencies.find(({ name }: any) => name === 'ink_core')
+        );
+      })
+      .filter(({ name }: any) => !contractName || name === contractName);
 
     if (!contracts.length) {
       console.log(chalk.red(`No contract lib could be found`));
@@ -50,4 +52,4 @@ class Resolver {
   }
 }
 
-export default Resolver;
+export { Resolver };

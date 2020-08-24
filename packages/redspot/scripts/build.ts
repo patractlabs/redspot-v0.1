@@ -2,7 +2,7 @@ import yargs from 'yargs';
 import chalk from 'chalk';
 import spawn from 'cross-spawn';
 import { checkContractCli } from '../utils/checkRustEnv';
-import { getContracts } from '../utils/cargoMetadata';
+import { Resolver } from '@redspot/resolver';
 import path from 'path';
 
 process.on('unhandledRejection', (err) => {
@@ -27,14 +27,16 @@ const argv = yargs
     description: 'Run with verbose logging',
   }).argv;
 
-const contracts = getContracts(argv.package);
-
-console.log(`🔖  Find contracts: ${chalk.yellow(contracts.map((obj) => obj.name).join(','))}`);
-
-checkContractCli();
 run();
 
 async function run() {
+  checkContractCli();
+  const resolver = new Resolver();
+
+  const contracts = resolver.getContracts(argv.package);
+
+  console.log(`🔖  Find contracts: ${chalk.yellow(contracts.map((obj) => obj.name).join(','))}`);
+
   for (const contract of contracts) {
     console.log(`👉  Compile contract: ${chalk.yellow(contract.name)}`);
     try {
