@@ -48,9 +48,3 @@ test-env = [
   "std",
   "ink_lang/test-env",
 ]
-
-[profile.release]
-lto = true
-opt-level = "z"
-overflow-checks = true
-panic = "abort"

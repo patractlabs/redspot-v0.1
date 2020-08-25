@@ -6,3 +6,10 @@ members = [
   ".ink/abi_gen",
   "contracts/flipper",
 ]
+
+
+[profile.release]
+lto = true
+opt-level = "z"
+overflow-checks = true
+panic = "abort"
