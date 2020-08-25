@@ -4,6 +4,7 @@ import spawn from 'cross-spawn';
 import path from 'path';
 import yargs from 'yargs';
 import { checkContractCli } from '../utils/checkRustEnv';
+import { RedspotConfig } from '@redspot/config';
 
 process.on('unhandledRejection', (err) => {
   throw err;

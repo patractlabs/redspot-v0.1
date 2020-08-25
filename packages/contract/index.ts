@@ -2,10 +2,14 @@ import { execSync } from 'child_process';
 import chalk from 'chalk';
 
 class Contract {
-  contractMetadata: any;
+  #metadata: any;
 
-  constructor(contractMetadata: any) {
-    this.contractMetadata = contractMetadata;
+  constructor(metadata: any) {
+    this.#metadata = metadata;
+  }
+
+  get metadata() {
+    return this.#metadata;
   }
 }
 

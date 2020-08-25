@@ -24,5 +24,5 @@ if (scripts.includes(script)) {
 
   process.exit(result.status || undefined);
 } else {
-  console.log('Unknown script "' + script + '".');
+  console.log(`Invalid subcommand "${script}, Try "${scripts.join(', ')}"`);
 }

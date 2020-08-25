@@ -6,13 +6,28 @@ class RedspotConfig {
   static expectFileNames = ['redspot-config.js', 'redspotConfig.js'];
 
   config: any;
+  networkConfig: any;
+  _networkName: string;
 
-  constructor() {
+  constructor(networkName: string) {
+    this._networkName = networkName;
     this.load();
   }
 
-  get networks() {
-    return this.config.networks;
+  get networkName() {
+    return this._networkName;
+  }
+
+  get endpoints() {
+    if (!this.networkConfig) {
+      throw new Error(`The endpoints for ${this.networkName} could not be found`);
+    }
+
+    return this.networkConfig.endpoints;
+  }
+
+  get migrationsDir() {
+    return 'migrations';
   }
 
   load() {
@@ -23,6 +38,8 @@ class RedspotConfig {
     const config = require(configPath);
 
     this.config = config;
+
+    this.networkConfig = config?.networks?.[this.networkName];
   }
 
   detectConfig(): string {
