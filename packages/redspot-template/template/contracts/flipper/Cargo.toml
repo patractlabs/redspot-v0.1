@@ -24,7 +24,6 @@ crate-type = [
   "cdylib", # Used for normal contract Wasm blobs.
   "rlib", # Required for ABI generation, and using this contract as a dependency. If using `cargo contract build`, it will be automatically disabled to produce a smaller Wasm binary
 ]
-name = "flipper2"
 path = "lib.rs"
 
 [features]
