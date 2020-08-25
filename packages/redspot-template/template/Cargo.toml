@@ -1,6 +1,7 @@
 [workspace]
 exclude = [
   ".ink",
+  "contracts"
 ]
 members = [
   ".ink/abi_gen",
