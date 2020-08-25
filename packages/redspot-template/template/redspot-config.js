@@ -1,4 +1,5 @@
 module.exports = {
+  outDir: './artifacts',
   networks: {
     development: {
       endpoints: ['ws://127.0.0.1:9944'],
