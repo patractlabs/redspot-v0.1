@@ -2,6 +2,8 @@ import chalk from 'chalk';
 import findUp from 'find-up';
 import path from 'path';
 import { ApiPromise, WsProvider } from '@polkadot/api';
+import { KeyringInstance, KeyringOptions } from '@polkadot/keyring/types';
+import { Keyring } from '@polkadot/keyring';
 
 class RedspotConfig {
   static expectFileNames = ['redspot-config.js', 'redspotConfig.js'];
@@ -9,14 +11,16 @@ class RedspotConfig {
   cwd: string;
   config: any;
   networkConfig: any;
-  _networkName: string;
+  keyring: KeyringInstance;
+  #networkName: string;
   #api?: ApiPromise;
   #provider?: WsProvider;
 
   constructor(networkName: string, cwd: string) {
     this.cwd = cwd;
-    this._networkName = networkName;
+    this.#networkName = networkName;
     this.loadConfig();
+    this.keyring = this.createKeyring();
   }
 
   get api() {
@@ -28,7 +32,7 @@ class RedspotConfig {
   }
 
   get networkName() {
-    return this._networkName;
+    return this.#networkName;
   }
 
   get outDir() {
@@ -78,6 +82,26 @@ class RedspotConfig {
     }
 
     throw new Error(chalk.red('ERROR: Could not find suitable configuration file.'));
+  }
+
+  createKeyring(): KeyringInstance {
+    const keyring = new Keyring({
+      ss58Format: this.networkConfig.prefix || 42,
+    });
+    const pairs = this.networkConfig.accounts || [];
+
+    pairs.forEach(({ name, seed, type = 'sr25519' }: { name: string; seed: string; type: string }): void => {
+      const meta = {
+        isTesting: true,
+        name: name || seed.replace('//', '_').toLowerCase(),
+      };
+
+      const pair = keyring.addFromUri(seed, meta, type as 'sr25519');
+
+      pair.lock = () => {};
+    });
+
+    return keyring;
   }
 }
 

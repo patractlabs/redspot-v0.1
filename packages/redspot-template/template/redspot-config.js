@@ -2,6 +2,7 @@ module.exports = {
   outDir: './artifacts',
   networks: {
     development: {
+      prefix: 42,
       endpoints: ['ws://127.0.0.1:9944'],
       accounts: [
         { name: 'alice', seed: 'Alice' },
