@@ -6,13 +6,15 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 class RedspotConfig {
   static expectFileNames = ['redspot-config.js', 'redspotConfig.js'];
 
+  cwd: string;
   config: any;
   networkConfig: any;
   _networkName: string;
   #api?: ApiPromise;
   #provider?: WsProvider;
 
-  constructor(networkName = 'development') {
+  constructor(networkName: string, cwd: string) {
+    this.cwd = cwd;
     this._networkName = networkName;
     this.loadConfig();
   }
@@ -27,6 +29,10 @@ class RedspotConfig {
 
   get networkName() {
     return this._networkName;
+  }
+
+  get outDir() {
+    return path.resolve(this.cwd, this.config.outDir || './artifacts');
   }
 
   get endpoints() {

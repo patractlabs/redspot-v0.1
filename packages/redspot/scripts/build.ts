@@ -32,7 +32,8 @@ run();
 
 async function run() {
   checkContractCli();
-  const config = new RedspotConfig();
+  const cwd = process.cwd();
+  const config = new RedspotConfig('development', cwd);
   const resolver = new Resolver(config);
 
   const contracts = resolver.getContracts(argv.package);

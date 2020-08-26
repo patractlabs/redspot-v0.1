@@ -1,5 +1,5 @@
 import { RedspotConfig } from '@redspot/config';
-import Contract from '@redspot/contract';
+import { Contract } from '@redspot/contract';
 import chalk from 'chalk';
 import { execSync } from 'child_process';
 

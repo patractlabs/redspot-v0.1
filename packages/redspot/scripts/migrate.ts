@@ -1,11 +1,10 @@
 import { RedspotConfig } from '@redspot/config';
 import { Resolver } from '@redspot/resolver';
-import yargs from 'yargs';
-import chalk from 'chalk';
-import spawn from 'cross-spawn';
-import path from 'path';
 import fs from 'fs-extra';
+import path from 'path';
 import { NodeVM } from 'vm2';
+import { Deployer } from '@redspot/deployer';
+import yargs from 'yargs';
 
 const argv = yargs
   .usage('Usage: redspot migrate [options]')
@@ -24,7 +23,8 @@ const argv = yargs
 run();
 
 async function run() {
-  const config = new RedspotConfig(argv.network);
+  const cwd = process.cwd();
+  const config = new RedspotConfig(argv.network, cwd);
 
   const migrationsDir = config.migrationsDir;
   const files = getAllMigrationFile(migrationsDir);

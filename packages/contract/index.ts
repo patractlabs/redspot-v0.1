@@ -1,5 +1,3 @@
-import { execSync } from 'child_process';
-import chalk from 'chalk';
 import { RedspotConfig } from '@redspot/config';
 
 class Contract {
@@ -20,4 +18,4 @@ class Contract {
   }
 }
 
-export default Contract;
+export { Contract };

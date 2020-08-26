@@ -13,6 +13,7 @@
     "yargs": "^15.4.1"
   },
   "devDependencies": {
+    "@redspot/deployer": "0.1.24",
     "@types/fs-extra": "^9.0.1"
   },
   "files": [
