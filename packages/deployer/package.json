@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@redspot/contract": "0.1.24",
+    "@redspot/utils": "0.1.24",
     "@polkadot/api": "^1.30.1",
     "chalk": "^4.1.0",
     "find-up": "^5.0.0"

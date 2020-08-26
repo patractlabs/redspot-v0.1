@@ -16,7 +16,8 @@ export const extrinsicHelper = (extrinsic: any, signOption: any, api?: ApiPromis
       txHash: extrinsic.toHex(),
     } as Partial<TxStatus>;
 
-    extrinsic.signAndSend(signOption).subscribe(
+    extrinsic.signAndSend(
+      signOption,
       (result: SubmittableResult) => {
         if (result.status.isInBlock) {
           actionStatus.blockHash = result.status.asInBlock.toHex();
