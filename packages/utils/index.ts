@@ -1,5 +1,6 @@
 import { ApiPromise, SubmittableResult } from '@polkadot/api';
-
+import { SubmittableExtrinsic } from '@polkadot/api/types';
+import { KeyringPair } from '@polkadot/keyring/types';
 interface TxStatus {
   account: string;
   txHash?: string;
@@ -10,15 +11,20 @@ interface TxStatus {
   result: SubmittableResult;
 }
 
-export const extrinsicHelper = (extrinsic: any, signOption: any, api?: ApiPromise): Promise<TxStatus> => {
+export const extrinsicHelper = (
+  extrinsic: SubmittableExtrinsic<'promise'>,
+  signer: KeyringPair,
+  api?: ApiPromise,
+): Promise<TxStatus> => {
   return new Promise((resolve, reject) => {
     const actionStatus = {
       txHash: extrinsic.toHex(),
     } as Partial<TxStatus>;
 
-    extrinsic.signAndSend(
-      signOption,
-      (result: SubmittableResult) => {
+    extrinsic
+      .signAndSend(signer, (result: SubmittableResult) => {
+        actionStatus.result = result;
+
         if (result.status.isInBlock) {
           actionStatus.blockHash = result.status.asInBlock.toHex();
         }
@@ -65,15 +71,14 @@ export const extrinsicHelper = (extrinsic: any, signOption: any, api?: ApiPromis
 
           reject(actionStatus);
         }
-      },
-      (error: any) => {
+      })
+      .catch((error: any) => {
         actionStatus.message = error.message;
         actionStatus.data = error;
         actionStatus.status = 'error';
         actionStatus.account = extrinsic.signer.toString();
 
         reject(actionStatus);
-      },
-    );
+      });
   });
 };
