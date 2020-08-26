@@ -54,8 +54,8 @@ async function runMigration(config: any, filePath: string, migrationsDir: string
   return fn();
 }
 
-function getContext(config: any) {
-  const resolver = new Resolver();
+function getContext(config: RedspotConfig) {
+  const resolver = new Resolver(config);
 
   return {
     artifacts: resolver,

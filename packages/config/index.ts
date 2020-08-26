@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import findUp from 'find-up';
 import path from 'path';
+import { ApiPromise, WsProvider } from '@polkadot/api';
 
 class RedspotConfig {
   static expectFileNames = ['redspot-config.js', 'redspotConfig.js'];
@@ -8,10 +9,20 @@ class RedspotConfig {
   config: any;
   networkConfig: any;
   _networkName: string;
+  #api?: ApiPromise;
+  #provider?: WsProvider;
 
-  constructor(networkName: string) {
+  constructor(networkName = 'development') {
     this._networkName = networkName;
-    this.load();
+    this.loadConfig();
+  }
+
+  get api() {
+    return this.#api;
+  }
+
+  get provider() {
+    return this.#provider;
   }
 
   get networkName() {
@@ -30,7 +41,18 @@ class RedspotConfig {
     return 'migrations';
   }
 
-  load() {
+  apiReady() {
+    return this.#api ? this.#api.isReady : Promise.resolve(false);
+  }
+
+  loadApi() {
+    this.#provider = new WsProvider(this.endpoints);
+    this.#api = new ApiPromise({
+      provider: this.#provider,
+    });
+  }
+
+  loadConfig() {
     const configPath = this.detectConfig();
 
     delete require.cache[path.resolve(configPath)];

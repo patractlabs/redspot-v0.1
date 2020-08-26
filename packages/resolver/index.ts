@@ -1,14 +1,21 @@
+import { RedspotConfig } from '@redspot/config';
 import Contract from '@redspot/contract';
 import chalk from 'chalk';
 import { execSync } from 'child_process';
 
 class Resolver {
   metadata: any;
+  #config: RedspotConfig;
   contracts: any[];
 
-  constructor() {
+  constructor(config: RedspotConfig) {
+    this.#config = config;
     this.metadata = this.getCargoMetadata();
     this.contracts = this.getContracts();
+  }
+
+  get config() {
+    return this.#config;
   }
 
   require(contractName: string) {
@@ -17,7 +24,7 @@ class Resolver {
       throw new Error(`The specified contract name ${chalk.cyan(contractName)} could not be found`);
     }
 
-    const contract = new Contract(contractMetadata);
+    const contract = new Contract(this.config, contractMetadata);
 
     return contract;
   }
@@ -32,7 +39,6 @@ class Resolver {
     }
   }
 
-  // @TODO hard code
   getContracts(contractName?: string): any[] {
     const contracts = this.metadata.packages
       .filter(({ id, dependencies }: { id: string; dependencies: any }) => {
