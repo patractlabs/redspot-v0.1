@@ -31,7 +31,7 @@ function init() {
     .option('template', {
       type: 'string',
       default: 'flipper',
-      description: 'The template to install',
+      description: 'specify a template for the created project',
     })
     .demandCommand(
       1,
