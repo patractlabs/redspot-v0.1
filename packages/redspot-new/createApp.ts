@@ -5,7 +5,7 @@ import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
 import semver from 'semver';
-import yargs from 'yargs';
+import yargs, { argv } from 'yargs';
 
 const packageToInstall = 'redspot';
 const templateToInstall = '@redspot/redspot-template';
@@ -27,6 +27,11 @@ function init() {
       type: 'boolean',
       default: false,
       description: 'Run with verbose logging',
+    })
+    .option('template', {
+      type: 'string',
+      default: 'flipper',
+      description: 'The template to install',
     })
     .demandCommand(
       1,
@@ -72,6 +77,7 @@ function createApp(name: string, verbose: boolean): void {
 }
 
 function run(root: string, appName: string, originalDirectory: string, useYarn: boolean, verbose: boolean) {
+  const templateName = argv.template;
   const allDependencies = [packageToInstall, templateToInstall];
 
   console.log('Installing packages. This might take a while.');
@@ -85,7 +91,7 @@ function run(root: string, appName: string, originalDirectory: string, useYarn: 
           cwd: process.cwd(),
           args: [],
         },
-        [root, appName, verbose, originalDirectory, templateToInstall],
+        [root, appName, verbose, originalDirectory, templateToInstall, templateName],
         `
     var { init } = require('${packageToInstall}/scripts/init.js');
     init.apply(null, JSON.parse(process.argv[1]));

@@ -41,11 +41,18 @@ function tryGitInit() {
     return false;
   }
 }
-function init(appPath: string, appName: string, verbose: boolean, originalDirectory: string, templateName: string) {
+function init(
+  appPath: string,
+  appName: string,
+  verbose: boolean,
+  originalDirectory: string,
+  templateToInstall: string,
+  templateName: string,
+) {
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
 
-  const templatePath = path.dirname(require.resolve(`${templateName}/package.json`, { paths: [appPath] }));
+  const templatePath = path.dirname(require.resolve(`${templateToInstall}/package.json`, { paths: [appPath] }));
 
   const templateJsonPath = path.join(templatePath, 'template.json');
 
@@ -88,11 +95,20 @@ function init(appPath: string, appName: string, verbose: boolean, originalDirect
   fs.writeFileSync(path.join(appPath, 'package.json'), JSON.stringify(appPackage, null, 2) + os.EOL);
 
   // Copy the files for the user
-  const templateDir = path.join(templatePath, 'template');
+  const templateDir = path.join(templatePath, 'templates', templateName);
   if (fs.existsSync(templateDir)) {
     fs.copySync(templateDir, appPath);
   } else {
     console.error(`Could not locate template: ${chalk.green(templateDir)}`);
+    return;
+  }
+
+  // Copy the files
+  const commonDir = path.join(templatePath, 'common');
+  if (fs.existsSync(commonDir)) {
+    fs.copySync(commonDir, appPath);
+  } else {
+    console.error(`Could not locate template: ${chalk.green(commonDir)}`);
     return;
   }
 
@@ -142,7 +158,7 @@ function init(appPath: string, appName: string, verbose: boolean, originalDirect
   console.log(`Removing template package using ${command}...`);
   console.log();
 
-  const proc = spawn.sync(command, [remove, templateName], {
+  const proc = spawn.sync(command, [remove, templateToInstall], {
     stdio: 'inherit',
   });
   if (proc.status !== 0) {
