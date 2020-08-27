@@ -17,21 +17,27 @@ class Deployer {
     return this.#config;
   }
 
-  async putCode(contract: Contract, signer: KeyringPair) {
+  async putCode(contract: Contract, signer: KeyringPair): Promise<string | undefined> {
+    console.log(`🚧  putCode ${chalk.cyan(contract.metadata.name)}`);
     if (!this.config.api || !(await this.config.apiReady())) throw new Error('The API is not ready');
     const outDir = this.config.outDir;
     const wasmCode = fs.readFileSync(path.join(outDir, `${contract.metadata.name}.wasm`)).toString('hex');
-    console.log(this.config.api.registry.knownTypes.types)
     const extrinsic = this.config.api.tx.contracts.putCode(`0x${wasmCode}`);
     try {
       const status = await extrinsicHelper(extrinsic, signer);
       const record = status.result.findRecord('contracts', 'CodeStored');
 
       if (!record) {
-        console.log(chalk.red('ERROR: No code stored after executing putCode()'));
+        throw new Error(chalk.red('ERROR: No code stored after executing putCode()'));
       }
 
-      return record?.event.data[0];
+      const codeHash = record?.event.data[0].toHex();
+
+      if (codeHash) {
+        console.log(`✅  ${chalk.cyan(contract.metadata.name)} codeHash: ${codeHash}`);
+      }
+
+      return codeHash;
     } catch (error) {
       console.log(chalk.red(`ERROR: ${error.message}`));
     }

@@ -25,7 +25,7 @@ module.exports = {
             '0xa8f2d83016052e5d6d77b2f6fd5d59418922a09024cda701b3c34369ec43a7668faf12ff39cd4e5d92bb773972f41a7a5279ebc2ed92264bed8f47d344f8f18c',
         },
       ],
-      types: { Address: 'AccountId' },
+      types: {},
     },
   },
 };

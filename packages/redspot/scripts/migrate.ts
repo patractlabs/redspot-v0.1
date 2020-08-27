@@ -36,6 +36,8 @@ async function run() {
   for (const { sequenceNo, filePath } of files) {
     await runMigration(config, filePath, migrationsDir);
   }
+
+  process.exit(0)
 }
 
 async function runMigration(config: RedspotConfig, filePath: string, migrationsDir: string) {
