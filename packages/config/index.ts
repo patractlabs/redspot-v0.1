@@ -1,11 +1,12 @@
+import { ApiPromise, WsProvider } from '@polkadot/api';
+import { Keyring } from '@polkadot/keyring';
+import createPair from '@polkadot/keyring/pair';
+import { KeyringInstance } from '@polkadot/keyring/types';
+import { hexToU8a } from '@polkadot/util';
 import chalk from 'chalk';
+import { execSync } from 'child_process';
 import findUp from 'find-up';
 import path from 'path';
-import { ApiPromise, WsProvider } from '@polkadot/api';
-import { KeyringInstance, KeyringOptions } from '@polkadot/keyring/types';
-import { Keyring } from '@polkadot/keyring';
-import { hexToU8a } from '@polkadot/util';
-import createPair from '@polkadot/keyring/pair';
 
 class RedspotConfig {
   static expectFileNames = ['redspot-config.js', 'redspotConfig.js'];
@@ -13,6 +14,8 @@ class RedspotConfig {
   cwd: string;
   config: any;
   networkConfig: any;
+  manifest: any;
+  contracts: any;
   keyring?: KeyringInstance;
   #networkName: string;
   #api?: ApiPromise;
@@ -21,11 +24,21 @@ class RedspotConfig {
   constructor(networkName: string, cwd: string) {
     this.cwd = cwd;
     this.#networkName = networkName;
+    this.manifest = this.getCargoManifest();
+    this.contracts = this.getContracts();
     this.loadConfig();
   }
 
   get api() {
     return this.#api;
+  }
+
+  get targetDirectory() {
+    return this.manifest.target_directory;
+  }
+
+  get workspaceRoot() {
+    return this.manifest.workspace_root;
   }
 
   get provider() {
@@ -37,7 +50,7 @@ class RedspotConfig {
   }
 
   get outDir() {
-    return path.resolve(this.cwd, this.config.outDir || './artifacts');
+    return path.resolve(this.workspaceRoot, this.config.outDir || './artifacts');
   }
 
   get endpoints() {
@@ -127,6 +140,33 @@ class RedspotConfig {
     );
 
     return keyring;
+  }
+
+  getCargoManifest() {
+    const execCommand = 'cargo metadata --no-deps --format-version 1';
+    try {
+      const output = execSync(execCommand, { maxBuffer: 1024 * 2048 }).toString();
+      return JSON.parse(output);
+    } catch (error) {
+      throw new Error(chalk.red(`\`${execCommand}\` has failed`));
+    }
+  }
+
+  getContracts(contractName?: string): any[] {
+    const contracts = this.manifest.packages
+      .filter(({ id, dependencies }: { id: string; dependencies: any }) => {
+        return (
+          (this.manifest.workspace_members || []).includes(id) &&
+          !!dependencies.find(({ name }: any) => name === 'ink_core')
+        );
+      })
+      .filter(({ name }: any) => !contractName || name === contractName);
+
+    if (!contracts.length) {
+      throw new Error(`Contract ${chalk.cyan(contractName)} cannot be found`);
+    }
+
+    return contracts;
   }
 }
 

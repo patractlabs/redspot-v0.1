@@ -1,6 +1,7 @@
 import { Resolver } from '@redspot/resolver';
 import chalk from 'chalk';
 import spawn from 'cross-spawn';
+import fs from 'fs-extra';
 import path from 'path';
 import yargs from 'yargs';
 import { checkContractCli } from '../utils/checkRustEnv';
@@ -36,7 +37,9 @@ async function run() {
   const config = new RedspotConfig('development', cwd);
   const resolver = new Resolver(config);
 
-  const contracts = resolver.getContracts(argv.package);
+  const contracts = config.getContracts(argv.package);
+  const wasmFiles: string[] = [];
+  const metadataFiles: string[] = [];
 
   console.log(`🔖  Find contracts: ${chalk.yellow(contracts.map((obj) => obj.name).join(','))}`);
 
@@ -44,6 +47,7 @@ async function run() {
     console.log(`👉  Compile contract: ${chalk.yellow(contract.name)}`);
     try {
       await compileContracts(contract);
+      wasmFiles.push(`${contract.name}.wasm`);
     } catch (reason) {
       if (reason.command) {
         console.log(`  ${chalk.cyan(reason.command)} has failed.`);
@@ -53,6 +57,36 @@ async function run() {
       process.exit(1);
     }
   }
+
+  const generateMetadataContract = contracts.find((c) => path.dirname(c.manifest_path) === config.workspaceRoot);
+
+  if (generateMetadataContract) {
+    console.log(`👉  Generate metadata: ${chalk.yellow(generateMetadataContract.name)}`);
+
+    await generateMetadata(generateMetadataContract);
+
+    metadataFiles.push('metadata.json');
+  }
+
+  console.log(`🚚  Copy wasm files: ${wasmFiles.join(', ')}`);
+  for (const filepath of wasmFiles) {
+    const source = path.resolve(config.targetDirectory, filepath);
+    fs.ensureDirSync(config.outDir);
+    fs.copyFileSync(source, path.resolve(config.outDir, path.basename(source)));
+  }
+
+  if (metadataFiles.length) {
+    console.log(`🚚  Copy abi files: ${metadataFiles.join(', ')}`);
+    for (const filepath of metadataFiles) {
+      const source = path.resolve(config.targetDirectory, filepath);
+      const json = fs.readJsonSync(source);
+      const fileName = `${json.contract.name}.json`;
+      fs.ensureDirSync(config.outDir);
+      fs.copyFileSync(source, path.resolve(config.outDir, path.basename(fileName)));
+    }
+  }
+
+  console.log(`🎉  Compile successfully! You can find them at ${chalk.cyan(config.targetDirectory)}`)
 }
 
 function compileContracts(contract: any) {
@@ -85,7 +119,7 @@ function compileContracts(contract: any) {
 
 function generateMetadata(contract: any) {
   return new Promise((resolve, reject) => {
-    let args = ['run', '--', 'package', 'abi-gen', '--', 'release'];
+    let args = [`+${argv.toolchain}`, `contract`, 'generate-metadata'];
 
     if (argv.verbose) {
       args = args.concat('--', 'verbose');
