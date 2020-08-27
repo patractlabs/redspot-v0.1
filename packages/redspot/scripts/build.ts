@@ -86,7 +86,7 @@ async function run() {
     }
   }
 
-  console.log(`🎉  Compile successfully! You can find them at ${chalk.cyan(config.targetDirectory)}`)
+  console.log(`🎉  Compile successfully! You can find them at ${chalk.cyan(config.outDir)}`)
 }
 
 function compileContracts(contract: any) {
