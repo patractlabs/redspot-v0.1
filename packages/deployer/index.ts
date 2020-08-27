@@ -4,6 +4,7 @@ import { Contract } from '@redspot/contract';
 import { extrinsicHelper } from '@redspot/utils';
 import fs from 'fs-extra';
 import chalk from 'chalk';
+import path from 'path';
 
 class Deployer {
   #config: RedspotConfig;
@@ -17,9 +18,10 @@ class Deployer {
   }
 
   async putCode(contract: Contract, signer: KeyringPair) {
-    if (!this.config.api || (await this.config.apiReady())) throw new Error('The API is not ready');
+    if (!this.config.api || !(await this.config.apiReady())) throw new Error('The API is not ready');
     const outDir = this.config.outDir;
-    const wasmCode = fs.readFileSync(outDir).toString('hex');
+    const wasmCode = fs.readFileSync(path.join(outDir, `${contract.metadata.name}.wasm`)).toString('hex');
+    console.log(this.config.api.registry.knownTypes.types)
     const extrinsic = this.config.api.tx.contracts.putCode(`0x${wasmCode}`);
     try {
       const status = await extrinsicHelper(extrinsic, signer);

@@ -4,6 +4,8 @@ import path from 'path';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { KeyringInstance, KeyringOptions } from '@polkadot/keyring/types';
 import { Keyring } from '@polkadot/keyring';
+import { hexToU8a } from '@polkadot/util';
+import createPair from '@polkadot/keyring/pair';
 
 class RedspotConfig {
   static expectFileNames = ['redspot-config.js', 'redspotConfig.js'];
@@ -11,7 +13,7 @@ class RedspotConfig {
   cwd: string;
   config: any;
   networkConfig: any;
-  keyring: KeyringInstance;
+  keyring?: KeyringInstance;
   #networkName: string;
   #api?: ApiPromise;
   #provider?: WsProvider;
@@ -20,7 +22,6 @@ class RedspotConfig {
     this.cwd = cwd;
     this.#networkName = networkName;
     this.loadConfig();
-    this.keyring = this.createKeyring();
   }
 
   get api() {
@@ -55,11 +56,17 @@ class RedspotConfig {
     return this.#api ? this.#api.isReady : Promise.resolve(false);
   }
 
-  loadApi() {
+  async loadApi() {
     this.#provider = new WsProvider(this.endpoints);
     this.#api = new ApiPromise({
       provider: this.#provider,
+      types: this.networkConfig.types || {},
     });
+    return this.#api.isReady;
+  }
+
+  async loadKeyring() {
+    this.keyring = this.createKeyring();
   }
 
   loadConfig() {
@@ -90,16 +97,34 @@ class RedspotConfig {
     });
     const pairs = this.networkConfig.accounts || [];
 
-    pairs.forEach(({ name, seed, type = 'sr25519' }: { name: string; seed: string; type: string }): void => {
-      const meta = {
-        isTesting: true,
-        name: name || seed.replace('//', '_').toLowerCase(),
-      };
+    pairs.forEach(
+      ({
+        name,
+        publicKey,
+        secretKey,
+        type = 'sr25519',
+      }: {
+        name: string;
+        publicKey: string;
+        secretKey: string;
+        type: 'sr25519';
+      }): void => {
+        const meta = {
+          isTesting: true,
+          name: name,
+        };
 
-      const pair = keyring.addFromUri(seed, meta, type as 'sr25519');
+        const pair = keyring.addPair(
+          createPair(
+            { toSS58: keyring.encodeAddress, type },
+            { publicKey: hexToU8a(publicKey), secretKey: hexToU8a(secretKey) },
+            meta,
+          ),
+        );
 
-      pair.lock = () => {};
-    });
+        pair.lock = () => {};
+      },
+    );
 
     return keyring;
   }

@@ -6,6 +6,10 @@ import { NodeVM } from 'vm2';
 import { Deployer } from '@redspot/deployer';
 import yargs from 'yargs';
 
+process.on('unhandledRejection', (err) => {
+  throw err;
+});
+
 const argv = yargs
   .usage('Usage: redspot migrate [options]')
   .option('network', {
@@ -34,10 +38,14 @@ async function run() {
   }
 }
 
-async function runMigration(config: any, filePath: string, migrationsDir: string) {
+async function runMigration(config: RedspotConfig, filePath: string, migrationsDir: string) {
   console.log(`👉  Running migration: ${path.relative(migrationsDir, filePath)}`);
 
+  await config.loadApi();
+  await config.loadKeyring();
+
   const context = getContext(config);
+  const deployer = new Deployer(config);
 
   const vm = new NodeVM({
     sandbox: context,
@@ -51,7 +59,7 @@ async function runMigration(config: any, filePath: string, migrationsDir: string
 
   const fn = vm.run(content, filePath);
 
-  return fn();
+  return fn(config, deployer);
 }
 
 function getContext(config: RedspotConfig) {
