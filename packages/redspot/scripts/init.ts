@@ -103,7 +103,7 @@ function init(
     return;
   }
 
-  // Copy the files
+  // Copy the common files
   const commonDir = path.join(templatePath, 'common');
   if (fs.existsSync(commonDir)) {
     fs.copySync(commonDir, appPath);
