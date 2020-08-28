@@ -7,11 +7,11 @@ import chalk from 'chalk';
 import { execSync } from 'child_process';
 import findUp from 'find-up';
 import path from 'path';
+import { cryptoWaitReady } from '@polkadot/util-crypto';
 
 class RedspotConfig {
   static expectFileNames = ['redspot-config.js', 'redspotConfig.js'];
 
-  cwd: string;
   config: any;
   networkConfig: any;
   manifest: any;
@@ -21,8 +21,7 @@ class RedspotConfig {
   #api?: ApiPromise;
   #provider?: WsProvider;
 
-  constructor(networkName: string, cwd: string) {
-    this.cwd = cwd;
+  constructor(networkName: string) {
     this.#networkName = networkName;
     this.manifest = this.getCargoManifest();
     this.contracts = this.getContracts();
@@ -31,6 +30,14 @@ class RedspotConfig {
 
   get api() {
     return this.#api;
+  }
+
+  get pairs() {
+    return this.keyring?.getPairs() || [];
+  }
+
+  get appPackageJson() {
+    return path.resolve(this.workspaceRoot, 'package.json');
   }
 
   get targetDirectory() {
@@ -79,6 +86,7 @@ class RedspotConfig {
   }
 
   async loadKeyring() {
+    await cryptoWaitReady();
     this.keyring = this.createKeyring();
   }
 

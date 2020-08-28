@@ -3,7 +3,8 @@
     "dependencies": {},
     "scripts": {
       "build": "redspot build",
-      "migrate": "redspot migrate"
+      "migrate": "redspot migrate",
+      "test": "redspot test"
     }
   }
 }

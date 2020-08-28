@@ -27,17 +27,16 @@ const argv = yargs
 run();
 
 async function run() {
-  const cwd = process.cwd();
-  const config = new RedspotConfig(argv.network, cwd);
+  const config = new RedspotConfig(argv.network);
 
   const migrationsDir = config.migrationsDir;
-  const files = getAllMigrationFile(migrationsDir);
+  const files = getAllMigrationFile(config, migrationsDir);
 
-  for (const { sequenceNo, filePath } of files) {
+  for (const { filePath } of files) {
     await runMigration(config, filePath, migrationsDir);
   }
 
-  process.exit(0)
+  process.exit(0);
 }
 
 async function runMigration(config: RedspotConfig, filePath: string, migrationsDir: string) {
@@ -72,8 +71,8 @@ function getContext(config: RedspotConfig) {
   };
 }
 
-function getAllMigrationFile(dir: string) {
-  const dirPath = path.relative(process.cwd(), dir);
+function getAllMigrationFile(config: RedspotConfig, dir: string) {
+  const dirPath = path.relative(config.workspaceRoot, dir);
   const files = fs.readdirSync(dirPath, 'utf8');
 
   return files

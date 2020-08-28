@@ -1,11 +1,10 @@
-import { Resolver } from '@redspot/resolver';
+import { RedspotConfig } from '@redspot/config';
 import chalk from 'chalk';
 import spawn from 'cross-spawn';
 import fs from 'fs-extra';
 import path from 'path';
 import yargs from 'yargs';
 import { checkContractCli } from '../utils/checkRustEnv';
-import { RedspotConfig } from '@redspot/config';
 
 process.on('unhandledRejection', (err) => {
   throw err;
@@ -33,9 +32,7 @@ run();
 
 async function run() {
   checkContractCli();
-  const cwd = process.cwd();
-  const config = new RedspotConfig('development', cwd);
-  const resolver = new Resolver(config);
+  const config = new RedspotConfig('development');
 
   const contracts = config.getContracts(argv.package);
   const wasmFiles: string[] = [];
@@ -86,7 +83,7 @@ async function run() {
     }
   }
 
-  console.log(`🎉  Compile successfully! You can find them at ${chalk.cyan(config.outDir)}`)
+  console.log(`🎉  Compile successfully! You can find them at ${chalk.cyan(config.outDir)}`);
 }
 
 function compileContracts(contract: any) {
