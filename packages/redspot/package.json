@@ -1,10 +1,10 @@
 {
   "name": "redspot",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@redspot/config": "0.1.28",
+    "@redspot/config": "0.1.30",
     "@redspot/resolver": "0.1.28",
     "chalk": "^4.1.0",
     "cross-spawn": "^7.0.3",
@@ -14,7 +14,7 @@
     "yargs": "^15.4.1"
   },
   "devDependencies": {
-    "@redspot/deployer": "0.1.25",
+    "@redspot/deployer": "0.1.30",
     "@types/fs-extra": "^9.0.1"
   },
   "files": [
