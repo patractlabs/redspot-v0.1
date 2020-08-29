@@ -1,11 +1,11 @@
 {
   "name": "@redspot/test-env",
-  "version": "0.1.32",
+  "version": "0.1.33",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@redspot/config": "0.1.32",
-    "@redspot/resolver": "0.1.32",
+    "@redspot/config": "0.1.33",
+    "@redspot/resolver": "0.1.33",
     "jest-environment-node": "^26.3.0"
   },
   "files": [
