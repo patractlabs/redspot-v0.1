@@ -7,7 +7,7 @@ function createJestConfig(network: string, rootDir: string) {
     testEnvironmentOptions: {
       network,
     },
-    setupFilesAfterEnv: ['redspot/utils/testSetup.js'],
+    setupFilesAfterEnv: ['@redspot/test-env/setup.js'],
   };
 
   return config;
