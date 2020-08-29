@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@redspot/config": "0.1.30",
+    "@redspot/resolver": "0.1.30",
     "jest-environment-node": "^26.3.0"
   },
   "files": [
