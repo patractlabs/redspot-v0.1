@@ -1,6 +1,9 @@
 import { ApiPromise, SubmittableResult } from '@polkadot/api';
 import { SubmittableExtrinsic } from '@polkadot/api/types';
 import { KeyringPair } from '@polkadot/keyring/types';
+import { createClass, createTypeUnsafe, Option, Raw } from '@polkadot/types';
+import { Codec, Registry, TypeDef, TypeDefInfo } from '@polkadot/types/types';
+
 interface TxStatus {
   account: string;
   txHash?: string;
@@ -82,3 +85,11 @@ export const extrinsicHelper = (
       });
   });
 };
+
+export function formatData(registry: Registry, data: Raw, { info, type }: TypeDef): Codec {
+  if (info === TypeDefInfo.Option) {
+    return new Option(registry, createClass(registry, type), createTypeUnsafe(registry, type, [data], true));
+  }
+
+  return createTypeUnsafe(registry, type, [data], true);
+}

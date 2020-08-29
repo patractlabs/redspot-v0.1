@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@polkadot/api": "1.30.1"
+    "@polkadot/api": "1.30.1",
+    "@polkadot/types": "1.30.1"
   },
   "files": [
     "index.js"
