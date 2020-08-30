@@ -48,8 +48,10 @@
       "@redspot/deployer": ["deployer/*"],
       "@redspot/redspot-template": ["redspot-template/*"],
       "@redspot/resolver": ["resolver/*"],
-      "@redspot/utils": ["utils/*"]
+      "@redspot/utils": ["utils/*"],
+      "@redspot/api-contract": ["api-contract/*"]
     },
+    "resolveJsonModule": true,
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */
     // "types": [],                           /* Type declaration files to be included in compilation. */
@@ -67,5 +69,6 @@
     /* Experimental Options */
     // "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
-  }
+  },
+  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]
 }

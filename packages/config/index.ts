@@ -9,6 +9,8 @@ import findUp from 'find-up';
 import path from 'path';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 
+import { Option, Raw, createClass, createTypeUnsafe } from '@polkadot/types';
+
 class RedspotConfig {
   static expectFileNames = ['redspot-config.js', 'redspotConfig.js'];
 
@@ -100,6 +102,14 @@ class RedspotConfig {
     this.config = config;
 
     this.networkConfig = config?.networks?.[this.networkName];
+  }
+
+  createType(type: string, data: any) {
+    if (this.api?.registry) {
+      return createTypeUnsafe(this.api.registry, type, [data], true);
+    } else {
+      throw new Error('the api is not initialized');
+    }
   }
 
   detectConfig(): string {

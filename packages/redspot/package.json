@@ -19,6 +19,7 @@
     "@types/fs-extra": "^9.0.1"
   },
   "files": [
+    "index.js",
     "bin",
     "utils",
     "scripts"

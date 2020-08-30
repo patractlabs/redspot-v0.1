@@ -1,0 +1,34 @@
+{
+  "name": "@redspot/api-contract",
+  "version": "0.1.35",
+  "description": "Interfaces for interacting with contracts and contract ABIs",
+  "main": "index.js",
+  "keywords": [
+    "Polkadot",
+    "ABI"
+  ],
+  "author": "Jaco Greeff <jacogr@gmail.com>",
+  "maintainers": [
+    "Jaco Greeff <jacogr@gmail.com>"
+  ],
+  "contributors": [],
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polkadot-js/api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/polkadot-js/api/issues"
+  },
+  "homepage": "https://github.com/polkadot-js/api/tree/master/packages/api-contract#readme",
+  "dependencies": {
+    "@polkadot/api": "1.30.1",
+    "@polkadot/rpc-core": "1.30.1",
+    "@polkadot/types": "1.30.1",
+    "@polkadot/util": "3.3.1"
+  }
+}
