@@ -177,8 +177,10 @@ function init(
   console.log('');
   console.log(chalk.cyan(`  ${displayedCommand} test`));
   console.log('    Test the contract.');
+  console.log('');
   console.log(chalk.cyan(`  ${displayedCommand} Migrate`));
   console.log('    Migrate the contract');
+  console.log('');
 }
 
 export { init };
