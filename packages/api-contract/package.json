@@ -1,6 +1,6 @@
 {
   "name": "@redspot/api-contract",
-  "version": "0.1.36",
+  "version": "0.1.37",
   "description": "Interfaces for interacting with contracts and contract ABIs",
   "main": "index.js",
   "keywords": [
