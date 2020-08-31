@@ -5,7 +5,6 @@
 import sanitize from '@polkadot/types/create/sanitize';
 import { InterfaceTypes } from '@polkadot/types/types';
 import { assert, isUndefined } from '@polkadot/util';
-import { InkTypeDef } from './types';
 import {
   InkProject,
   MtField,
@@ -18,6 +17,7 @@ import {
   MtTypeDefTuple,
   MtTypeDefVariant,
 } from './contractsAbi/types';
+import { InkTypeDef } from './types';
 
 // this maps through the the enum definition in types/interfaces/contractsAbi/defintions.ts
 const PRIMITIVES: (keyof InterfaceTypes)[] = [

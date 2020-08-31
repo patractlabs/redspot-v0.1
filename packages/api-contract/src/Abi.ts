@@ -28,6 +28,10 @@ export default class ContractAbi {
     [this.constructors, this.messages] = this.decodeAbi(this.abi);
   }
 
+  public createType(type: any, data: any) {
+    return this.inkRegistry.createType(type, data);
+  }
+
   private decodeAbi(abi: InkProject): [ContractABIFn[], AbiMessages] {
     const constructors = abi.spec.constructors.map(
       (constructor, index): ContractABIFn => {
@@ -94,7 +98,10 @@ export default class ContractAbi {
 
     fn.args = args;
     fn.isConstant = !((message as any).mutates || false);
-    fn.type = (message as any).returnType || null;
+    fn.type =
+      (message as any).returnType && !(message as any).returnType.isNone
+        ? this.getTypeDefAt((message as any).returnType.unwrap().id)
+        : null;
     return fn;
   }
 }

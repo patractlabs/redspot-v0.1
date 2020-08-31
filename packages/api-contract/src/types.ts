@@ -101,7 +101,7 @@ export interface ContractABIFnArg {
 export interface ContractABIMeta {
   args: ContractABIFnArg[];
   isConstant: boolean;
-  type: TypeDef | null;
+  type: string | null;
 }
 
 export interface ContractABIFn extends ContractABIMeta {

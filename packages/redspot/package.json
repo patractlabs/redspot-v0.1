@@ -7,6 +7,7 @@
     "@redspot/config": "0.1.33",
     "@redspot/resolver": "0.1.33",
     "@redspot/test-env": "0.1.35",
+    "@redspot/utils": "0.1.33",
     "chalk": "^4.1.0",
     "cross-spawn": "^7.0.3",
     "fs-extra": "^9.0.1",

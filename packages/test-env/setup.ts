@@ -5,4 +5,6 @@ global.beforeAll(async () => {
 
   await redspotConfig.loadApi();
   await redspotConfig.loadKeyring();
+
+  jest.setTimeout(40000)
 });

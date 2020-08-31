@@ -13,7 +13,7 @@ class RedSpotTestEnv extends NodeEnvironment {
 
   async teardown() {
     //@ts-ignore
-    this.context.config?.api.disconnect();
+    this.context?.config?.api?.disconnect();
     await super.teardown();
   }
 }
