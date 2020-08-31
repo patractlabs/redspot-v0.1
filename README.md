@@ -30,3 +30,11 @@ Inside the newly created project, you can run some built-in commands:
 ### `npm run build` or `yarn build`
 
 Compile your contract into wasm
+
+### `npm run test` or `yarn test`
+
+Test your contract
+
+### `npm run migrate` or `yarn migrate`
+
+Migrate your contract
