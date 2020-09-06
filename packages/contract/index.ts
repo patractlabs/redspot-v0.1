@@ -6,6 +6,8 @@ import fs from 'fs-extra';
 import { KeyringPair } from '@polkadot/keyring/types';
 import { Hash } from '@polkadot/types/interfaces';
 import BN from 'bn.js';
+import { ContractApi } from './ContractApi';
+import chalk from 'chalk';
 
 class Contract {
   #metadata: any;
@@ -55,9 +57,31 @@ class Contract {
     inputData: any,
     endowment: number | BN = new BN('200000000000000000'),
     gasRequired: number | BN = new BN('100000000000'),
+    options?: any,
   ) {
     const deployer = new Deployer(this.config);
     return deployer.instantiate(this, signer, codeHash, inputData, endowment, gasRequired);
+  }
+
+  async deployed(
+    signer: KeyringPair,
+    codeHash: Hash | string,
+    inputData: any,
+    endowment: number | BN = new BN('200000000000000000'),
+    gasRequired: number | BN = new BN('100000000000'),
+    options?: any,
+  ) {
+    const deployer = new Deployer(this.config);
+    const address = await deployer.instantiate(this, signer, codeHash, inputData, endowment, gasRequired);
+
+    if (!this.config.api) {
+      throw new Error(chalk.red('ERROR: NEED API'));
+    }
+    if (!this.abi) {
+      throw new Error(`ERROR: Unable to find the abi file for ${chalk.yellow(this.metadata.name)}`);
+    }
+
+    return new ContractApi(this.config.api, this.abi, address.toString(), options);
   }
 }
 
