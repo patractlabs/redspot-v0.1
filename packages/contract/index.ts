@@ -63,6 +63,17 @@ class Contract {
     return deployer.instantiate(this, signer, codeHash, inputData, endowment, gasRequired);
   }
 
+  load(address: string, options?: any) {
+    if (!this.config.api) {
+      throw new Error(chalk.red('ERROR: NEED API'));
+    }
+    if (!this.abi) {
+      throw new Error(`ERROR: Unable to find the abi file for ${chalk.yellow(this.metadata.name)}`);
+    }
+
+    return new ContractApi(this.config.api, this.abi, address.toString(), options);
+  }
+
   async deployed(
     signer: KeyringPair,
     codeHash: Hash | string,
