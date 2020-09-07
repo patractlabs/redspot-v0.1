@@ -1,10 +1,10 @@
 {
   "name": "@redspot/resolver",
-  "version": "0.1.41",
+  "version": "0.1.42",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@redspot/contract": "0.1.41",
+    "@redspot/contract": "0.1.42",
     "chalk": "^4.1.0"
   },
   "files": [
