@@ -38,10 +38,17 @@ async function run() {
   const wasmFiles: string[] = [];
   const metadataFiles: string[] = [];
 
-  console.log(`🔖  Find contracts: ${chalk.yellow(contracts.map((obj) => obj.name).join(','))}`);
+  console.log(
+    `✨  Detect contracts: ${chalk.yellow(
+      contracts.map((obj) => `${obj.name}${chalk.gray(`(${obj.manifest_path})`)}`).join(','),
+    )}`,
+  );
+  console.log('');
 
   for (const contract of contracts) {
-    console.log(`👉  Compile contract: ${chalk.yellow(contract.name)}`);
+    console.log(chalk.magenta(`===== Compile ${contract.name} =====`));
+    console.log('');
+
     try {
       await compileContracts(contract);
       wasmFiles.push(`${contract.name}.wasm`);
@@ -58,13 +65,15 @@ async function run() {
   const generateMetadataContract = contracts.find((c) => path.dirname(c.manifest_path) === config.workspaceRoot);
 
   if (generateMetadataContract) {
-    console.log(`👉  Generate metadata: ${chalk.yellow(generateMetadataContract.name)}`);
+    console.log('');
+    console.log(chalk.magenta(`===== Generate metadata ${generateMetadataContract.name} =====`));
+    console.log('');
 
     await generateMetadata(generateMetadataContract);
 
     metadataFiles.push('metadata.json');
   }
-
+  console.log('');
   console.log(`🚚  Copy wasm files: ${wasmFiles.join(', ')}`);
   for (const filepath of wasmFiles) {
     const source = path.resolve(config.targetDirectory, filepath);
@@ -84,6 +93,7 @@ async function run() {
   }
 
   console.log(`🎉  Compile successfully! You can find them at ${chalk.cyan(config.outDir)}`);
+  console.log('');
 }
 
 function compileContracts(contract: any) {

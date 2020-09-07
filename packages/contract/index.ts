@@ -8,6 +8,7 @@ import { Hash } from '@polkadot/types/interfaces';
 import BN from 'bn.js';
 import { ContractApi } from './ContractApi';
 import chalk from 'chalk';
+import prettyjson from 'prettyjson';
 
 class Contract {
   #metadata: any;
@@ -71,6 +72,8 @@ class Contract {
       throw new Error(`ERROR: Unable to find the abi file for ${chalk.yellow(this.metadata.name)}`);
     }
 
+    console.log(`✨  Load contract instance: ${chalk.blue(address.toString())}`);
+
     return new ContractApi(this.config.api, this.abi, address.toString(), options);
   }
 
@@ -91,6 +94,8 @@ class Contract {
     if (!this.abi) {
       throw new Error(`ERROR: Unable to find the abi file for ${chalk.yellow(this.metadata.name)}`);
     }
+
+    console.log(`✨  Load contract instance: ${chalk.blue(address.toString())}`);
 
     return new ContractApi(this.config.api, this.abi, address.toString(), options);
   }

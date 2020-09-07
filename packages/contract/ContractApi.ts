@@ -1,6 +1,8 @@
 import { ApiPromise } from '@polkadot/api';
 import { Abi } from '@redspot/api-contract';
 import { extrinsicHelper } from 'redspot';
+import prettyjson from 'prettyjson';
+import chalk from 'chalk';
 
 class ContractApi {
   public abi: Abi;
@@ -35,12 +37,23 @@ class ContractApi {
         return {
           data: inputData,
           call: async (options: any) => {
+            console.log(chalk.magenta(`===== Call ${messageName} =====`));
+            console.log(
+              prettyjson.render({
+                dest: `${this.options.address}`,
+                gasLimit: `${this.options.gasLimit}`,
+                inputData: `0x${Buffer.from(inputData).toString('hex')}`,
+              }),
+            );
             const result = await this.api.rpc.contracts.call({
               dest: this.options.address,
               gasLimit: this.options.gasLimit,
               inputData: inputData,
               ...options,
             });
+            console.log(`➤ ${messageName} completed`);
+            console.log(JSON.stringify(result.toJSON(), null, 2));
+            console.log('');
             if (result.isError) {
               return Promise.reject(result);
             } else if (result.isSuccess) {
@@ -48,6 +61,15 @@ class ContractApi {
             }
           },
           send: async (options: any) => {
+            console.log(chalk.magenta(`===== Send ${messageName} =====`));
+            console.log(
+              prettyjson.render({
+                dest: `${this.options.address}`,
+                value: `${options.value || '0'}`,
+                gasLimit: `${options.gasLimit || this.options.gasLimit}`,
+                inputData: `0x${Buffer.from(inputData).toString('hex')}`,
+              }),
+            );
             const tx = this.api.tx.contracts.call(
               this.options.address,
               options.value || '0',
@@ -56,7 +78,7 @@ class ContractApi {
             );
 
             const result = await extrinsicHelper(tx, options.from);
-
+            console.log(`➤ ${messageName} completed`);
             if (result?.events) {
               result.events.map((event) => {
                 if (event.method === 'ContractExecution') {
@@ -65,6 +87,22 @@ class ContractApi {
                 return event;
               });
             }
+
+            console.log(
+              JSON.stringify(
+                {
+                  account: result.account,
+                  txHash: result.txHash,
+                  blockHash: result.blockHash,
+                  data: result.data,
+                  message: result.message,
+                  status: result.status,
+                  events: result.events,
+                },
+                null,
+                2,
+              ),
+            );
 
             return result;
           },

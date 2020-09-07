@@ -10,6 +10,9 @@ test('contract test', async () => {
     await erc20.putCode(Alice),
     erc20.abi.constructors[0]('1000000000000000016'),
   );
+  // const erc20Api = await erc20.load(
+  //   "5CxscuATDdLLRsFV7RxmBPqLaDLQYEB8Dg7Hm7Pi8kErbGWz"
+  // );
 
   expect('0x' + Buffer.from(Alice.publicKey).toString('hex')).toBe(rsconfig.networks.development.accounts[0].publicKey);
 
