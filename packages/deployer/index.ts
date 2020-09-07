@@ -7,6 +7,7 @@ import BN from 'bn.js';
 import chalk from 'chalk';
 import fs from 'fs-extra';
 import path from 'path';
+import prettyjson from 'prettyjson';
 
 class Deployer {
   #config: RedspotConfig;
@@ -20,11 +21,17 @@ class Deployer {
   }
 
   async putCode(contract: Contract, signer: KeyringPair): Promise<string | undefined> {
-    console.log(`🚧  putCode ${chalk.cyan(contract.metadata.name)}`);
     if (!this.config.api || !(await this.config.apiReady())) throw new Error('The API is not ready');
     const outDir = this.config.outDir;
     const wasmCode = fs.readFileSync(path.join(outDir, `${contract.metadata.name}.wasm`)).toString('hex');
     const extrinsic = this.config.api.tx.contracts.putCode(`0x${wasmCode}`);
+    console.log('');
+    console.log(chalk.magenta(`===== PutCode ${contract.metadata.name} =====`));
+    console.log(
+      prettyjson.render({
+        WasmCode: `0x${wasmCode}`.replace(/^(\w{32})(\w*)(\w{30})$/g, '$1......$3'),
+      }),
+    );
     try {
       const status = await extrinsicHelper(extrinsic, signer);
       const record = status.result.findRecord('contracts', 'CodeStored');
@@ -36,7 +43,7 @@ class Deployer {
       const codeHash = record?.event.data[0].toHex();
 
       if (codeHash) {
-        console.log(`✅  ${chalk.cyan(contract.metadata.name)} codeHash: ${codeHash}`);
+        console.log(`➤ ${contract.metadata.name} codeHash: ${chalk.blue(codeHash)}`);
       }
 
       return codeHash;
@@ -53,12 +60,17 @@ class Deployer {
     endowment: number | BN = new BN('200000000000000000'),
     gasRequired: number | BN = new BN('100000000000'),
   ) {
-    console.log(`🚧  instantiate ${chalk.cyan(contract.metadata.name)}`);
     if (!this.config.api || !(await this.config.apiReady())) throw new Error('The API is not ready');
-    console.log('endowment: ', endowment);
-    console.log('gasRequired: ', gasRequired);
-    console.log('codeHash: ', codeHash);
-    console.log('inputData: ', inputData);
+    console.log('');
+    console.log(chalk.magenta(`===== Instantiate ${contract.metadata.name} =====`));
+    console.log(
+      prettyjson.render({
+        Endowment: `${endowment}`,
+        GasRequired: `${gasRequired}`,
+        CodeHash: `${codeHash}`,
+        InputData: `${inputData}`,
+      }),
+    );
 
     const extrinsic = this.config.api.tx.contracts.instantiate(endowment, gasRequired, codeHash, inputData);
 
@@ -73,7 +85,7 @@ class Deployer {
       const address = record.event.data[1];
 
       if (address) {
-        console.log(`✅  ${chalk.cyan(contract.metadata.name)} contract address: ${address}`);
+        console.log(`➤ ${contract.metadata.name} contract address: ${chalk.blue(address)}`);
       }
 
       return address;

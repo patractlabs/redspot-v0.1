@@ -2146,7 +2146,7 @@
     memoizee "^0.4.14"
     rxjs "^6.6.2"
 
-"@polkadot/api@1.30.1", "@polkadot/api@^1.30.1":
+"@polkadot/api@1.30.1":
   version "1.30.1"
   resolved "https://registry.yarnpkg.com/@polkadot/api/-/api-1.30.1.tgz#19aed18f3bf7cd6beec12690c5cb866673bbd8dd"
   integrity sha512-fbybLuI+T1Ow14sHJwyO4eQBF7+oMpjmRXfmIOrFjAm11YJxeQQd+W9i5FNdB9LugdxDG4nQZDYZ+7VaFWUsGQ==
@@ -2329,18 +2329,6 @@
     "@polkadot/types" "1.30.1"
     "@polkadot/util" "3.3.1"
 
-"@redspot/config@0.1.39":
-  version "0.1.39"
-  resolved "https://registry.yarnpkg.com/@redspot/config/-/config-0.1.39.tgz#cc86ee36b9f2343620e04b15b58c8ffcf4181c85"
-  integrity sha512-sFw3PoFg0q6DD0tCKakBYs1+BGVQpMlup7gZy5EoLk7WueOeBlDOhoycOPiUNy2nRLFmViq1I9yb+MZwdd5Hmg==
-  dependencies:
-    "@polkadot/api" "^1.30.1"
-    "@polkadot/keyring" "^3.3.1"
-    "@polkadot/util-crypto" "^3.3.1"
-    "@redspot/utils" "0.1.39"
-    chalk "^4.1.0"
-    find-up "^5.0.0"
-
 "@redspot/contract@0.1.39":
   version "0.1.39"
   resolved "https://registry.yarnpkg.com/@redspot/contract/-/contract-0.1.39.tgz#8d7f64a8e210a7ea5cda3da2a322c07ff0f2782b"
@@ -2365,23 +2353,6 @@
     bn.js "^5.1.3"
     chalk "^4.1.0"
     find-up "^5.0.0"
-
-"@redspot/resolver@0.1.39":
-  version "0.1.39"
-  resolved "https://registry.yarnpkg.com/@redspot/resolver/-/resolver-0.1.39.tgz#66791e6914bc6f111d75655915ba9fa680463095"
-  integrity sha512-d9UXDN9v7NELcZh1qVhljj6Gy0Oum8XkfsWPWUeVMX8I4HJayzPVhdxjMSQEUfxN5faJ95L2kwb6GLGRndjl/g==
-  dependencies:
-    "@redspot/contract" "0.1.39"
-    chalk "^4.1.0"
-
-"@redspot/test-env@0.1.39":
-  version "0.1.39"
-  resolved "https://registry.yarnpkg.com/@redspot/test-env/-/test-env-0.1.39.tgz#8737dc92d29078d3740b8253afca528b72eba347"
-  integrity sha512-WrykKpcrApMOyH/Ty4KeiKlhAOchqGF7tg9+GClbk03oEJd1qHqmMffbnQz/7oF8+c/2pWxa08Is8rvBcpLCig==
-  dependencies:
-    "@redspot/config" "0.1.39"
-    "@redspot/resolver" "0.1.39"
-    jest-environment-node "^26.3.0"
 
 "@redspot/utils@0.1.39":
   version "0.1.39"
@@ -2543,6 +2514,11 @@
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.0.2.tgz#5bb52ee68d0f8efa9cc0099920e56be6cc4e37f3"
   integrity sha512-IkVfat549ggtkZUthUzEX49562eGikhSYeVGX97SkMFn+sTZrgRewXjQ4tPKFPCykZHkX1Zfd9OoELGqKU2jJA==
+
+"@types/prettyjson@^0.0.29":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@types/prettyjson/-/prettyjson-0.0.29.tgz#3d9176d583e1839aa5c83b088487003652ce38ff"
+  integrity sha512-Zu4jAKE46yc6R8JrVkCBWbXhs18dUgI/JlbID4jziFgUBgEdAHxFekR5TlEnk9phHdGE80QlCznRBaxlk0rl7w==
 
 "@types/semver@^7.3.1":
   version "7.3.1"
@@ -3381,6 +3357,11 @@ color-name@~1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
+
+colors@^1.1.2:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/colors/-/colors-1.4.0.tgz#c50491479d4c1bdaed2c9ced32cf7c7dc2360f78"
+  integrity sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==
 
 columnify@^1.5.4:
   version "1.5.4"
@@ -7506,6 +7487,14 @@ pretty-quick@^2.0.1:
     ignore "^5.1.4"
     mri "^1.1.4"
     multimatch "^4.0.0"
+
+prettyjson@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/prettyjson/-/prettyjson-1.2.1.tgz#fcffab41d19cab4dfae5e575e64246619b12d289"
+  integrity sha1-/P+rQdGcq0365eV15kJGYZsS0ok=
+  dependencies:
+    colors "^1.1.2"
+    minimist "^1.2.0"
 
 process-nextick-args@~2.0.0:
   version "2.0.1"

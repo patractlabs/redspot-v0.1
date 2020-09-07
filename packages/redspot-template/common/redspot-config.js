@@ -2,7 +2,10 @@ module.exports = {
   outDir: './artifacts',
   networks: {
     development: {
-      types: {},
+      types: {
+        // Address: "AccountId",
+        // LookupSource: "AccountId",
+      },
       prefix: 42,
       endpoints: ['ws://127.0.0.1:9944'],
       accounts: [

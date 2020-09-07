@@ -44,7 +44,8 @@ export const extrinsicHelper = (
 ): Promise<TxStatus> => {
   return new Promise((resolve, reject) => {
     const actionStatus = {
-      txHash: extrinsic.toHex(),
+      txHash: extrinsic.hash.toHex(),
+      data: extrinsic.toHex(),
     } as Partial<TxStatus>;
 
     extrinsic
@@ -56,7 +57,6 @@ export const extrinsicHelper = (
         }
 
         if (result.status.isFinalized || result.status.isInBlock) {
-          actionStatus.data = result;
           actionStatus.account = extrinsic.signer.toString();
           actionStatus.events = formatEvents(result.events);
 

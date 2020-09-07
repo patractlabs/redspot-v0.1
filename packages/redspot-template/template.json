@@ -1,6 +1,9 @@
 {
   "package": {
     "dependencies": {},
+    "devDependencies": {
+      "@types/jest": "^26.0.13"
+    },
     "scripts": {
       "build": "redspot build",
       "migrate": "redspot migrate",
