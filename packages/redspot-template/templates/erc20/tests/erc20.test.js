@@ -19,7 +19,7 @@ test('contract test', async () => {
   const transferResult = await erc20Api.messages.transfer(Bob.publicKey, '100000').send({
     from: Alice,
   });
-  console.log('events:', transferResult.events);
+  console.log('events:', JSON.stringify(transferResult.events));
   const afterAliceBalance = await erc20Api.messages.balanceOf(Alice.publicKey).call();
-  console.log(JSON.stringify(afterAliceBalance));
+  console.log('afterAliceBalance:', afterAliceBalance.toString());
 });
