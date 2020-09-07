@@ -20,6 +20,6 @@ test('contract test', async () => {
     from: Alice,
   });
   console.log('events:', transferResult.events);
-  const afteraliceBalance = await erc20Api.messages.balanceOf(Alice.publicKey).call();
-  console.log(afterAliceBalance);
+  const afterAliceBalance = await erc20Api.messages.balanceOf(Alice.publicKey).call();
+  console.log(JSON.stringify(afterAliceBalance));
 });
