@@ -37,7 +37,7 @@ const PRIMITIVES: (keyof InterfaceTypes)[] = [
 ];
 
 function sanitizeOrUndefined(type: string | null): string | undefined {
-  return type ? sanitize(type, { allowNamespaces: true }) : undefined;
+  return type ? sanitize(type, { allowNamespaces: false }) : undefined;
 }
 
 function resolveTypeFromId(project: InkProject, typeId: MtLookupTypeId): string {
@@ -59,7 +59,7 @@ function resolveTypeFromPath(project: InkProject, type: MtType): string {
   const params = type.params.length
     ? `<${type.params.map((type): string | null => resolveTypeFromId(project, type)).join(', ')}>`
     : '';
-  const name = nameSegments.length ? `${type.path.join('::')}` : '';
+  const name = nameSegments.length ? `${type.path[nameSegments.length - 1]}` : '';
 
   return `${name}${params}`;
 }
@@ -81,13 +81,13 @@ function buildTypeDefFields(project: InkProject, typeFields: MtField[]): string 
       return `"${name}": ${JSON.stringify(type)}`;
     });
 
-    return fields.length ? `{${fields.join(',')}}` : 'Null';
+    return fields.length ? `({${fields.join(',')}})` : 'Null';
   }
 
   if (allUnnamed) {
     const fields = typeFields.map((field): string => resolveTypeFromId(project, field.type));
 
-    return fields.length ? `(${fields.join(', ')})` : 'Null';
+    return fields.length ? `${fields.join(', ')}` : 'Null';
   }
 
   throw new Error('buildTypeDefFields:: Fields must either be *all* named or *all* unnamed');
@@ -103,7 +103,7 @@ function buildTypeDefVariant(project: InkProject, typeVariant: MtTypeDefVariant)
     // FIXME We are currently ignoring the discriminant
     const variants = typeVariant.variants.map(({ name }): string => name.toString());
 
-    return variants.length ? `{_enum:[${variants.join(', ')}]}` : 'Null';
+    return variants.length ? `{"_enum":[${variants.join(', ')}]}` : 'Null';
   }
 
   const variants = typeVariant.variants.map(({ name, fields, discriminant }): string => {
@@ -112,10 +112,10 @@ function buildTypeDefVariant(project: InkProject, typeVariant: MtTypeDefVariant)
     const variantName = name.toString();
     const variantFields = buildTypeDefFields(project, fields);
 
-    return `"${variantName}": ${variantFields}`;
+    return `"${variantName}": "${variantFields}"`;
   });
 
-  return variants.length ? `{_enum:{${variants.join(', ')}}}` : 'Null';
+  return variants.length ? `{"_enum":{${variants.join(', ')}}}` : 'Null';
 }
 
 // convert a type definition into a primitive
@@ -170,8 +170,9 @@ function buildTypeDef(project: InkProject, type: MtTypeDef): string | null {
 }
 
 function convertType(project: InkProject, type: MtType, index: number): InkTypeDef {
-  const name = sanitize(resolveType(project, type), { allowNamespaces: true });
-  const typeDef = sanitizeOrUndefined(buildTypeDef(project, type.def));
+  const name = sanitize(resolveType(project, type), { allowNamespaces: false });
+  const _typeDef = buildTypeDef(project, type.def)
+  const typeDef = sanitizeOrUndefined(_typeDef);
   return {
     id: index,
     name,

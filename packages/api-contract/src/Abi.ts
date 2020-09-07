@@ -3,7 +3,8 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import { Compact, createClass } from '@polkadot/types';
-import { CodecArg, Constructor } from '@polkadot/types/types';
+import { CodecArg, Constructor, Codec } from '@polkadot/types/types';
+import { Struct, Enum } from '@polkadot/types/codec';
 import { assert, stringCamelCase } from '@polkadot/util';
 import { InkConstructorSpec, InkMessageSpec, InkProject, MtLookupTypeId } from './contractsAbi';
 import InkRegistry from './InkRegistry';
@@ -22,14 +23,18 @@ export default class ContractAbi {
   constructor(project: Record<string, any>) {
     this.inkRegistry = new InkRegistry();
     this.abi = this.inkRegistry.createType('InkProject' as any, project) as InkProject;
-    this.inkRegistry.register(getProjectRegistryTypes(this.abi));
     this.typeDefs = getProjectTypes(this.abi);
 
     [this.constructors, this.messages] = this.decodeAbi(this.abi);
+    this.registerTypes();
   }
 
   public createType(type: any, data: any) {
     return this.inkRegistry.createType(type, data);
+  }
+
+  public createEventData(data: any) {
+    return this.inkRegistry.createType('ContractExecution' as any, data);
   }
 
   private decodeAbi(abi: InkProject): [ContractABIFn[], AbiMessages] {
@@ -49,6 +54,25 @@ export default class ContractAbi {
     }, {});
 
     return [constructors, messages];
+  }
+
+  public registerTypes() {
+    this.inkRegistry.register(getProjectRegistryTypes(this.abi));
+
+    const eventsEumn: Record<string, Constructor<any>> = {};
+
+    for (const [_, eventSpec] of this.abi.spec.events.entries()) {
+      const struct: Record<string, Constructor<Codec> | undefined> = {};
+      for (const [_, arg] of eventSpec.args.entries()) {
+        struct[arg.name.toString()] = this.inkRegistry.createClass(this.getTypeDefAt(arg.type.id).toString() as any);
+      }
+
+      eventsEumn[eventSpec.name.toString()] = Struct.with(struct as any);
+    }
+
+    this.inkRegistry.register({
+      ContractExecution: Enum.with(eventsEumn),
+    });
   }
 
   public getTypeDefAt(findId: MtLookupTypeId): string {
