@@ -1,5 +1,6 @@
 import { ApiPromise, SubmittableResult } from '@polkadot/api';
 import { SubmittableExtrinsic } from '@polkadot/api/types';
+import { EventRecord } from '@polkadot/types/interfaces';
 import { KeyringPair } from '@polkadot/keyring/types';
 
 interface TxStatus {
@@ -10,6 +11,30 @@ interface TxStatus {
   data?: any;
   status: 'error' | 'event' | 'queued' | 'success';
   result: SubmittableResult;
+  events?: {
+    bytes: string;
+    section: string;
+    method: string;
+    phaseType: string;
+    phaseIndex: number;
+    args: any[];
+  }[];
+}
+
+function formatEvents(records: EventRecord[]) {
+  return records.map((record) => {
+    const documentation = (record.event.meta.toJSON() as any)?.documentation?.join('\n');
+
+    return {
+      doc: documentation,
+      bytes: record.toHex(),
+      section: record.event.section,
+      method: record.event.method,
+      phaseType: record.phase.type,
+      phaseIndex: record.phase.isNone ? null : (record.phase.value as any).toNumber(),
+      args: record.event.data.toJSON() as any[],
+    };
+  });
 }
 
 export const extrinsicHelper = (
@@ -33,6 +58,7 @@ export const extrinsicHelper = (
         if (result.status.isFinalized || result.status.isInBlock) {
           actionStatus.data = result;
           actionStatus.account = extrinsic.signer.toString();
+          actionStatus.events = formatEvents(result.events);
 
           result.events
             .filter(({ event: { section } }: any): boolean => section === 'system')
@@ -69,6 +95,7 @@ export const extrinsicHelper = (
           actionStatus.account = extrinsic.signer.toString();
           actionStatus.status = 'error';
           actionStatus.data = result;
+          actionStatus.events = formatEvents(result.events);
 
           reject(actionStatus);
         }
@@ -83,5 +110,3 @@ export const extrinsicHelper = (
       });
   });
 };
-
-

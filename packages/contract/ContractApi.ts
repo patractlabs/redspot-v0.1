@@ -55,7 +55,18 @@ class ContractApi {
               inputData,
             );
 
-            return extrinsicHelper(tx, options.from);
+            const result = await extrinsicHelper(tx, options.from);
+
+            if (result?.events) {
+              result.events.map((event) => {
+                if (event.method === 'ContractExecution') {
+                  event.args[1] = this.abi.createEventData(event.args[1]).toJSON();
+                }
+                return event;
+              });
+            }
+
+            return result;
           },
           sign: (options: any) => {
             const tx = this.api.tx.contracts.call(
