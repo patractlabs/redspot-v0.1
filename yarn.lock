@@ -2319,6 +2319,78 @@
   resolved "https://registry.yarnpkg.com/@polkadot/wasm-crypto/-/wasm-crypto-1.4.1.tgz#0a053d0c2587da30fb5313cef81f8d9a52029c68"
   integrity sha512-GPBCh8YvQmA5bobI4rqRkUhrEHkEWU1+lcJVPbZYsa7jiHFaZpzCLrGQfiqW/vtbU1aBS2wmJ0x1nlt33B9QqQ==
 
+"@redspot/api-contract@0.1.39":
+  version "0.1.39"
+  resolved "https://registry.yarnpkg.com/@redspot/api-contract/-/api-contract-0.1.39.tgz#90553c79d85598195861cb9c538fb9ea1092f420"
+  integrity sha512-yrhti3TiKhq2ncHPXK4H7ZN6Wl6yTRStCYSLrKqzK9DqTxXrg7sHBKV2EMPG/y5NKDRplXh2h+FsmXGujjWVPg==
+  dependencies:
+    "@polkadot/api" "1.30.1"
+    "@polkadot/rpc-core" "1.30.1"
+    "@polkadot/types" "1.30.1"
+    "@polkadot/util" "3.3.1"
+
+"@redspot/config@0.1.39":
+  version "0.1.39"
+  resolved "https://registry.yarnpkg.com/@redspot/config/-/config-0.1.39.tgz#cc86ee36b9f2343620e04b15b58c8ffcf4181c85"
+  integrity sha512-sFw3PoFg0q6DD0tCKakBYs1+BGVQpMlup7gZy5EoLk7WueOeBlDOhoycOPiUNy2nRLFmViq1I9yb+MZwdd5Hmg==
+  dependencies:
+    "@polkadot/api" "^1.30.1"
+    "@polkadot/keyring" "^3.3.1"
+    "@polkadot/util-crypto" "^3.3.1"
+    "@redspot/utils" "0.1.39"
+    chalk "^4.1.0"
+    find-up "^5.0.0"
+
+"@redspot/contract@0.1.39":
+  version "0.1.39"
+  resolved "https://registry.yarnpkg.com/@redspot/contract/-/contract-0.1.39.tgz#8d7f64a8e210a7ea5cda3da2a322c07ff0f2782b"
+  integrity sha512-rMyEcz4FuJ74ucuWeD42/zd6Lqjf+9wQ9IQs+occHuYnPYueo14HbcqSqFfdtZFypb4FShCMpOAdNoVZwMhJdA==
+  dependencies:
+    "@polkadot/keyring" "^3.4.1"
+    "@redspot/api-contract" "0.1.39"
+    "@redspot/deployer" "0.1.39"
+    bn.js "^5.1.3"
+    chalk "^4.1.0"
+    fs-extra "^9.0.1"
+
+"@redspot/deployer@0.1.39":
+  version "0.1.39"
+  resolved "https://registry.yarnpkg.com/@redspot/deployer/-/deployer-0.1.39.tgz#7f6e053de90d93b6022d003390bd5ac8e1172870"
+  integrity sha512-RNzWW+ziOSUcuy10IukYRYYjK6QH1YZTZYOO5TpmxJerfelQPKa6KsIGRldmS8nKgZ9p68OS9hs6wNKkC8d3uQ==
+  dependencies:
+    "@polkadot/api" "1.30.1"
+    "@redspot/api-contract" "0.1.39"
+    "@redspot/contract" "0.1.39"
+    "@redspot/utils" "0.1.39"
+    bn.js "^5.1.3"
+    chalk "^4.1.0"
+    find-up "^5.0.0"
+
+"@redspot/resolver@0.1.39":
+  version "0.1.39"
+  resolved "https://registry.yarnpkg.com/@redspot/resolver/-/resolver-0.1.39.tgz#66791e6914bc6f111d75655915ba9fa680463095"
+  integrity sha512-d9UXDN9v7NELcZh1qVhljj6Gy0Oum8XkfsWPWUeVMX8I4HJayzPVhdxjMSQEUfxN5faJ95L2kwb6GLGRndjl/g==
+  dependencies:
+    "@redspot/contract" "0.1.39"
+    chalk "^4.1.0"
+
+"@redspot/test-env@0.1.39":
+  version "0.1.39"
+  resolved "https://registry.yarnpkg.com/@redspot/test-env/-/test-env-0.1.39.tgz#8737dc92d29078d3740b8253afca528b72eba347"
+  integrity sha512-WrykKpcrApMOyH/Ty4KeiKlhAOchqGF7tg9+GClbk03oEJd1qHqmMffbnQz/7oF8+c/2pWxa08Is8rvBcpLCig==
+  dependencies:
+    "@redspot/config" "0.1.39"
+    "@redspot/resolver" "0.1.39"
+    jest-environment-node "^26.3.0"
+
+"@redspot/utils@0.1.39":
+  version "0.1.39"
+  resolved "https://registry.yarnpkg.com/@redspot/utils/-/utils-0.1.39.tgz#b75e6ecc90ed02db93e5145fcbad4d6a68c4c9aa"
+  integrity sha512-VcM02L7Y2RCv9g+pJshcAaozUOqV/M4XPdSveJ/dRrk+eLbRwClkg6U9tHPYlPpxiGzIZHQ66KYF7tyRyhD7Vg==
+  dependencies:
+    "@polkadot/api" "1.30.1"
+    "@polkadot/types" "1.30.1"
+
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.1.tgz#e7df00f98a203324f6dc7cc606cad9d4a8ab2217"
