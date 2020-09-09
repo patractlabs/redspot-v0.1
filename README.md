@@ -39,4 +39,6 @@ Test your contract
 
 Migrate your contract
 
+![](screencast.gif)
+
 
