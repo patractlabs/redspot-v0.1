@@ -1,5 +1,5 @@
-const flipper = artifacts.require('flipper');
+const incrementer = artifacts.require('incrementer');
 
 module.exports = function () {
-  console.log(flipper);
+  console.log(incrementer);
 };

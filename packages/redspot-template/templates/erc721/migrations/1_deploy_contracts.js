@@ -1,5 +1,5 @@
-const flipper = artifacts.require('flipper');
+const erc721 = artifacts.require('erc721');
 
 module.exports = function () {
-  console.log(flipper);
+  console.log(erc721);
 };

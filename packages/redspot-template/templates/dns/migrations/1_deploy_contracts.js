@@ -1,5 +1,5 @@
-const flipper = artifacts.require('flipper');
+const dns = artifacts.require('dns');
 
 module.exports = function () {
-  console.log(flipper);
+  console.log(dns);
 };

@@ -1,5 +1,5 @@
-const flipper = artifacts.require('flipper');
+const multisig_plain = artifacts.require('multisig_plain');
 
 module.exports = function () {
-  console.log(flipper);
+  console.log(multisig_plain);
 };
