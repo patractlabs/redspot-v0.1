@@ -5,7 +5,7 @@ describe("flipper test", () => {
   const Alice = config.pairs[0];
   let flipperApi;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     flipperApi = await flipper.deployed(
       Alice,
       await flipper.putCode(Alice),
@@ -19,7 +19,7 @@ describe("flipper test", () => {
     );
   })
 
-  test("flipper", () => {
+  test("flipper", async () => {
     const beforeValue = await flipperApi.messages.get().call();
     console.log('Current value is', beforeValue.toString())
     console.log('Flip')
