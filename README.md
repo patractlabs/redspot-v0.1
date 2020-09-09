@@ -59,7 +59,7 @@ Test your contract
 
 Migrate your contract
 
-![](https://user-images.githubusercontent.com/69485494/92663579-cae50d80-f355-11ea-93ce-fce832fa1a00.png)
+![](https://user-images.githubusercontent.com/69485494/92663743-34651c00-f356-11ea-8b30-facff1958d04.gif)
 
 
 ## Install from template
