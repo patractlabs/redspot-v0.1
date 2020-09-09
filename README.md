@@ -12,7 +12,7 @@ In Redspot v0.1, we will finish：
 ## Get Started Immediately
 
 ```bash
-  npx redspot-new flipper
+$ npx redspot-new flipper
 ```
 
 (npx is a package runner tool that comes with npm 5.2+ and higher, it ensures that you always install the latest version)
@@ -22,7 +22,7 @@ Redspot will create a directory called my-app inside the current folder.
 Once the installation is done, you can open your project folder:
 
 ```bash
-cd my-app
+$ cd flipper
 ```
 
 Inside the newly created project, you can run some built-in commands:
@@ -38,3 +38,5 @@ Test your contract
 ### `npm run migrate` or `yarn migrate`
 
 Migrate your contract
+
+

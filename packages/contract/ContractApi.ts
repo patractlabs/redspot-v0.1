@@ -37,6 +37,7 @@ class ContractApi {
         return {
           data: inputData,
           call: async (options: any) => {
+            console.log('');
             console.log(chalk.magenta(`===== Call ${messageName} =====`));
             console.log(
               prettyjson.render({
@@ -53,7 +54,6 @@ class ContractApi {
             });
             console.log(`➤ ${messageName} completed`);
             console.log(JSON.stringify(result.toJSON(), null, 2));
-            console.log('');
             if (result.isError) {
               return Promise.reject(result);
             } else if (result.isSuccess) {
@@ -61,6 +61,7 @@ class ContractApi {
             }
           },
           send: async (options: any) => {
+            console.log('');
             console.log(chalk.magenta(`===== Send ${messageName} =====`));
             console.log(
               prettyjson.render({
