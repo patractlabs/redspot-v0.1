@@ -169,7 +169,7 @@ Specially: you can specify the network you want by `yarn test --network <network
 
 All `<name>.test.js` files inside the tests directory will get tested and each file has its independent sandbox environment.
 
-Global variables `config` and `artifacts` are injected to the test files.
+Global variables [config](#config) and [artifacts](#artifacts) are injected to the test files.
 
 **Heads up, if contract code has been updated, please rum `yarn build` first to compile the project then run `yarn test` to test it.**
 
@@ -179,7 +179,7 @@ Global variables `config` and `artifacts` are injected to the test files.
 
 Run `yarn migrate --network <networkname>` to specify the network you want to link.
 
-Similarly,  global variables `config` and `artifacts` are injected to the migrate files as well.
+Similarly,  global variables [config](#config) and [artifacts](#artifacts) are injected to the migrate files as well.
 
 ### config
 
@@ -207,11 +207,11 @@ By instantiating the contract with the given parameters, the function will get a
 
 #### contract.deployed(signer: KeyringPair, codeHash: Hash | string, inputData: any, endowment: number | BN = new BN('10000000000'), gasRequired: number | BN = new BN('10000000000'))
 
-Similar to instantiate, but will return an instance of contractApi.
+Similar to instantiate, but will return an instance of [contractApi](#contractApi).
 
 #### contract.load(address: string)
 
-Load the instantiated contract and return an instance of contractApi
+Load the instantiated contract and return an instance of [contractApi](#contractApi)
 
 ### contractApi
 
