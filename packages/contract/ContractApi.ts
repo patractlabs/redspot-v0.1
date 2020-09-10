@@ -24,7 +24,7 @@ class ContractApi {
   get options() {
     return {
       address: this.address,
-      gasLimit: '100000000000',
+      gasLimit: '300000000',
       ...this.#options,
     };
   }
