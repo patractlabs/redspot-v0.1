@@ -57,7 +57,7 @@ class Deployer {
     signer: KeyringPair,
     codeHash: Hash | string,
     inputData: any,
-    endowment: number | BN = new BN('50000000000000'),
+    endowment: number | BN = new BN('5000000000000'),
     gasRequired: number | BN = new BN('50000000000'),
   ) {
     if (!this.config.api || !(await this.config.apiReady())) throw new Error('The API is not ready');
