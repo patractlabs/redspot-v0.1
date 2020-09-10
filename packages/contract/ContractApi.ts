@@ -3,6 +3,7 @@ import { Abi } from '@redspot/api-contract';
 import { extrinsicHelper } from 'redspot';
 import prettyjson from 'prettyjson';
 import chalk from 'chalk';
+import { config } from 'yargs';
 
 class ContractApi {
   public abi: Abi;
@@ -78,7 +79,7 @@ class ContractApi {
               inputData,
             );
 
-            const result = await extrinsicHelper(tx, options.from);
+            const result = await extrinsicHelper(tx, options.from, this.api);
             console.log(`➤ ${messageName} completed`);
             if (result?.events) {
               result.events.map((event) => {

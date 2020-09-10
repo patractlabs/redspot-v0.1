@@ -33,7 +33,7 @@ class Deployer {
       }),
     );
     try {
-      const status = await extrinsicHelper(extrinsic, signer);
+      const status = await extrinsicHelper(extrinsic, signer, this.config.api);
       const record = status.result.findRecord('contracts', 'CodeStored');
 
       if (!record) {
@@ -75,7 +75,7 @@ class Deployer {
     const extrinsic = this.config.api.tx.contracts.instantiate(endowment, gasRequired, codeHash, inputData);
 
     try {
-      const status = await extrinsicHelper(extrinsic, signer);
+      const status = await extrinsicHelper(extrinsic, signer, this.config.api);
       const record = status.result.findRecord('contracts', 'Instantiated');
 
       if (!record) {
