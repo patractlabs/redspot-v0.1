@@ -1,12 +1,12 @@
 {
   "name": "redspot",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
     "@redspot/config": "0.2.1",
-    "@redspot/resolver": "0.2.1",
-    "@redspot/test-env": "0.2.1",
+    "@redspot/resolver": "0.2.2",
+    "@redspot/test-env": "0.2.2",
     "@redspot/utils": "0.2.1",
     "chalk": "^4.1.0",
     "cross-spawn": "^7.0.3",
