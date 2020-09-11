@@ -47,7 +47,7 @@ $ npx redspot-new flipper
 
 (npx is a package runner tool that comes with npm 5.2+ and higher, it ensures that you always install the latest version)
 
-Redspot will create a directory called my-app inside the current folder.
+Redspot will create a directory called flipper inside the current folder.
 
 Once the installation is done, you can open your project folder:
 
@@ -79,10 +79,10 @@ Migrate your contract
 Redspot provides several contract templates: `flipper`,  `delegator` , `dns`, `erc20`, `erc721` , `incrementer`, `multisig_plain`. You can intall them like this:
 
 ```bash
-$ npx install <app-name> --template <template-name>
+$ npx redspot-new <app-name> --template <template-name>
 ```
 
-For instance: `npx install erc20 --template erc20`
+For instance: `npx redspot-new erc20 --template erc20`
 
 The default contract template is `flipper`.
 
