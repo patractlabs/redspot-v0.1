@@ -69,6 +69,8 @@ Migrate your contract
 ![](https://user-images.githubusercontent.com/69485494/92663743-34651c00-f356-11ea-8b30-facff1958d04.gif)
 
 
+**(Only the latest ink! is supported)**
+
 ## Install from template
 
 Redspot provides several contract templates: `flipper`,  `delegator` , `dns`, `erc20`, `erc721` , `incrementer`, `multisig_plain`. You can intall them like this:
