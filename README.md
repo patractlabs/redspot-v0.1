@@ -72,7 +72,7 @@ Migrate your contract
 ![](https://user-images.githubusercontent.com/69485494/92663743-34651c00-f356-11ea-8b30-facff1958d04.gif)
 
 
-**(Only the latest ink! is supported)**
+**(It works only on substrate-rc6 and the latest version of ink!)**
 
 ## Install from template
 
