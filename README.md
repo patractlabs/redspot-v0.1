@@ -299,5 +299,6 @@ It will install the latest `redSpot` version in your project.
 
 Redspot initializes with a debug configuration file in your project. You can run it like this:
 
+![image](https://user-images.githubusercontent.com/69485494/92835683-a65d6400-f42f-11ea-98b1-d44b7a2a32fc.png)
 
 
