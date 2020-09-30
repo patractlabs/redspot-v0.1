@@ -15,6 +15,8 @@ provide a develop type node, that could very easily for testing contracts.
 Please refer to this for more information:
 [https://github.com/patractlabs/jupiter](https://github.com/patractlabs/jupiter)
 
+Riot Group for disscusion: https://app.element.io/#/room/!RZjiuwwssNFJZxaTjg:matrix.org
+
 Table of Contents
 =================
 
