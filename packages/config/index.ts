@@ -175,7 +175,7 @@ class RedspotConfig {
       .filter(({ id, dependencies }: { id: string; dependencies: any }) => {
         return (
           (this.manifest.workspace_members || []).includes(id) &&
-          !!dependencies.find(({ name }: any) => name === 'ink_core')
+          !!dependencies.find(({ name }: any) => name === 'ink_lang')
         );
       })
       .filter(({ name }: any) => !contractName || name === contractName);
