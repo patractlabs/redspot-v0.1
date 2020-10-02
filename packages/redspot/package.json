@@ -1,13 +1,13 @@
 {
   "name": "redspot",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@redspot/config": "0.2.8",
-    "@redspot/resolver": "0.2.8",
-    "@redspot/test-env": "0.2.8",
-    "@redspot/utils": "0.2.8",
+    "@redspot/config": "0.2.9",
+    "@redspot/resolver": "0.2.9",
+    "@redspot/test-env": "0.2.9",
+    "@redspot/utils": "0.2.9",
     "chalk": "^4.1.0",
     "cross-spawn": "^7.0.3",
     "fs-extra": "^9.0.1",
@@ -17,7 +17,7 @@
     "yargs": "^15.4.1"
   },
   "devDependencies": {
-    "@redspot/deployer": "0.2.8",
+    "@redspot/deployer": "0.2.9",
     "@types/fs-extra": "^9.0.1"
   },
   "files": [
