@@ -15,7 +15,7 @@ provide a develop type node, that could very easily for testing contracts.
 Please refer to this for more information:
 [https://github.com/patractlabs/jupiter](https://github.com/patractlabs/jupiter)
 
-Riot Group for disscusion: https://app.element.io/#/room/!RZjiuwwssNFJZxaTjg:matrix.org
+Riot Group for disscusion: https://app.element.io/#/room/#PatractLabsDev:matrix.org
 
 *WARNING!!!*
 **Currently we think Redspot 0.1 framework is not suit for future requirements, thus we create a new repo [redspot-0.2](https://github.com/patractlabs/redspot-0.2) which based on a new framework and migrate all Redspot 0.1 features to a new project. However `redspot-0.2` is under developing, so we retain this repo now. After redspot-0.2 releasing first verion, we would change `redspot-0.2` to `redspot` to replace current repo, and change current repo name from `redspot` to `redspot-archived`. In the future, `redspot-archived` would not be maintained.**
