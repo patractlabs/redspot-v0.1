@@ -1,4 +1,11 @@
-# Redspot
+# Redspot-v0.1
+## 🚫 This repository has been archive
+
+*WARNING!!!*
+**Currently we think Redspot 0.1 framework is not suit for future requirements, thus we create a new repo [redspot](https://github.com/patractlabs/redspot) which based on a new framework and migrate all Redspot 0.1 features to a new project. **
+
+**Redspot-v0.1 is not maintained any more, if you need to use redspot, please use this repo [redspot](https://github.com/patractlabs/redspot). **
+
 Redspot is named after Jupiter's Great Red Spot, which is also the largest DOT in the solar system. Redspot's target project is Truffle (https://github.com/trufflesuite/truffle) in Truffle Suite. Redspot is a development environment, testing framework and asset pipeline for pallet-contracts. Redspot is trying to let the development of ink! be projectized and simplify the testing and interacting with contracts.
 
 In Redspot v0.1, we will finish：
@@ -16,9 +23,6 @@ Please refer to this for more information:
 [https://github.com/patractlabs/jupiter](https://github.com/patractlabs/jupiter)
 
 Riot Group for disscusion: https://app.element.io/#/room/#PatractLabsDev:matrix.org
-
-*WARNING!!!*
-**Currently we think Redspot 0.1 framework is not suit for future requirements, thus we create a new repo [redspot-0.2](https://github.com/patractlabs/redspot-0.2) which based on a new framework and migrate all Redspot 0.1 features to a new project. However `redspot-0.2` is under developing, so we retain this repo now. After redspot-0.2 releasing first verion, we would change `redspot-0.2` to `redspot` to replace current repo, and change current repo name from `redspot` to `redspot-archived`. In the future, `redspot-archived` would not be maintained.**
 
 Table of Contents
 =================
